@@ -9,11 +9,11 @@
     {% endif %}
 
     <form action="{% url 'login' %}" method="post">
-    {{ form }}
+{{form}}
     {% csrf_token %}
+
         <p></p>
     <button type="submit" class="btn btn-success">Войти</button>
     </form>
-
     <a href="{% url 'password_reset' %}">Забыли пароль?</a>
 {% endblock %}
