@@ -1,0 +1,14 @@
+{% extends 'lh/base.html' %}
+
+{% block content %}
+    <h1>Профиль</h1>
+    <hr>
+{% if searched_user.photo %}
+<img src="{{searched_user.photo.url}}" width="150px">
+{% endif %}
+{{searched_user.username}}
+{{searched_user.email}}
+{% if searched_user.id == check_id %}
+    <button type="button" class="btn btn-success">Настройки</button>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'lh/base.html' %}
+
+{% block content %}
+
+    <h1> {{user.username}}</h1>
+    <hr>
+
+    {% if form.errors %}
+        <p>{{ form.errors.error }}</p>
+    {% endif %}
+{% if user.photo %}
+<img src="{{user.photo.url}}" width="150px">
+{% endif %}
+    <form method="post" enctype="multipart/form-data">
+
+        <div class="mb-3"  align="left">
+            <label for="photo" class="form-label">Фото профиля</label>
+            {{ form.photo }}
+            <div class="form-text" id="titleHelp">Будет видна всем пользователям</div>
+        </div>
+
+        <div class="mb-3"  align="left">
+            <label for="username" class="form-label">Никнейм</label>
+            {{ form.username }}
+            <div id="tempHelp" class="form-text">Используется для входа и отображается в профиле</div>
+        </div>
+
+        <div class="mb-3"  align="left">
+            <label for="bio" class="form-label">О себе</label>
+            {{ form.bio }}
+            <div id="massHelp" class="form-text">Расскажите, чем Вы интересуетесь</div>
+        </div>
+
+        <div class="mb-3"  align="left">
+            <label for="formFile" class="form-label">Город</label>
+            {{ form.city }}
+        </div>
+
+    <div class="blank"></div>
+
+        {% csrf_token %}
+
+        <button type="submit" class="btn btn-success">Сохранить</button>
+
+    </form>
+
+{% endblock %}

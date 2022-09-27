@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('', HomeView.as_view(), name='home'),
+    path('profile/', include('profile_app.urls')),
 ]
 
 if settings.DEBUG:
