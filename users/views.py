@@ -14,14 +14,12 @@ class RegisterView(View):
     template_name = 'registration/register.html'
 
     def get(self, request):
-
         context = {
             'form': UserCreateForm()
         }
         return render(request, self.template_name, context)
 
     def post(self, request):
-
         form = UserCreateForm(request.POST)
 
         if form.is_valid():
@@ -36,5 +34,3 @@ class RegisterView(View):
             'form': form
         }
         return render(request, self.template_name, context)
-
-

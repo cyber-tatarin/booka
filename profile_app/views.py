@@ -33,9 +33,17 @@ class ProfileUpdateView(LoginRequiredMixin, View):
             return redirect('login')
 
         curr_user = get_object_or_404(User, id=request.user.id)
-        form = ProfileUpdateForm(initial={'username': curr_user.username,
-                                          'bio': curr_user.bio,
-                                          'city': curr_user.city.city.title})
+
+        if curr_user.city:
+            form = ProfileUpdateForm(initial={'username': curr_user.username,
+                                              'bio': curr_user.bio,
+                                              'city': curr_user.city.city
+                                              })
+
+        else:
+            form = ProfileUpdateForm(initial={'username': curr_user.username,
+                                              'bio': curr_user.bio
+                                              })
 
         context = {'form': form,
                    'photo': curr_user.photo}
@@ -69,4 +77,3 @@ class ProfileUpdateView(LoginRequiredMixin, View):
         }
 
         return render(request, self.template_name, context)
-

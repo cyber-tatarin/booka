@@ -4,7 +4,7 @@ from django_resized import ResizedImageField
 
 
 class Cities(models.Model):
-    city = models.CharField(max_length=200, null=True, blank=True)
+    city = models.CharField(max_length=40, null=True, blank=True)
 
 
 class User(AbstractUser):
