@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect, reverse, get_object_or_404
-from django.views.generic import ListView, UpdateView, DeleteView
+from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.db.models import Q
 from django.contrib.auth import get_user_model
-from .forms import ProfileUpdateForm
-from users.models import Cities
+from .forms import ProfileUpdateForm, ContactCreateForm
+from users.models import Cities, Contacts
+from django.core.exceptions import ObjectDoesNotExist
 
 User = get_user_model()
 
@@ -26,11 +27,10 @@ class ProfileView(View):
 
 
 class ProfileUpdateView(LoginRequiredMixin, View):
+    login_url = 'login'
     template_name = 'profile_app/profile_upd.html'
 
     def get(self, request, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('login')
 
         curr_user = get_object_or_404(User, id=request.user.id)
 
@@ -59,12 +59,12 @@ class ProfileUpdateView(LoginRequiredMixin, View):
             curr_user.username = data['username']
             curr_user.bio = data['bio']
 
-            curr_city = Cities.objects.get_or_create(
-                city=data['city'].title,
-                defaults={'city': data['city'].title}
-            )
+            if data['city']:
+                titledcity = data['city'].upper()
 
-            curr_user.city = curr_city[0]
+                curr_city = Cities.objects.get_or_create(city=titledcity)
+                curr_user.city = curr_city[0]
+
             if data['photo']:
                 curr_user.photo = data['photo']
             curr_user.save()
@@ -77,3 +77,105 @@ class ProfileUpdateView(LoginRequiredMixin, View):
         }
 
         return render(request, self.template_name, context)
+
+
+class SettingsView(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
+    template_name = 'profile_app/settings.html'
+
+
+class ContactCreateView(LoginRequiredMixin, View):
+    login_url = 'login'
+    template_name = 'profile_app/contact_create.html'
+
+    def get(self, request, **kwargs):
+        form = ContactCreateForm()
+
+        context = {
+            'form': form
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, **kwargs):
+        form = ContactCreateForm(data=request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+            contact = Contacts(**data)
+            contact.userid = request.user
+            contact.save()
+            return redirect('profile_app:settings')
+
+        context = {
+            'form': form
+        }
+
+        return render(request, self.template_name, context)
+
+
+class ContactListView(LoginRequiredMixin, View):
+    login_url = 'login'
+    template_name = 'profile_app/contact_list.html'
+
+    def get(self, request, **kwargs):
+        queryset = Contacts.objects.all().filter(userid=request.user.id)
+        context = {
+            'contact_list': queryset
+        }
+
+        return render(request, self.template_name, context)
+
+
+class ContactDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = 'login'
+
+    def get_queryset(self):
+        queryset = Contacts.objects.all().filter(userid=self.request.user, id=self.kwargs.get('pk'))
+        return queryset
+
+    def get_success_url(self):
+        return reverse('profile_app:contact-list')
+
+    def get_template_names(self):
+        return 'profile_app/contact_delete.html'
+
+
+class ContactUpdateView(LoginRequiredMixin, View):
+    login_url = 'login'
+    template_name = 'profile_app/contact_upd.html'
+
+    def get(self, request, **kwargs):
+        contact = self.get_object()
+        form = ContactCreateForm(initial={
+            'contact_type': contact.contact_type,
+            'contact': contact.contact,
+            'description': contact.description
+        })
+
+        context = {
+            'form': form
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, **kwargs):
+        form = ContactCreateForm(data=request.POST)
+        contact = self.get_object()
+
+        if form.is_valid():
+            data = form.cleaned_data
+            contact.contact = data['contact']
+            contact.contact_type = data['contact_type']
+            contact.description = data['description']
+            contact.save()
+            return redirect('profile_app:contact-list')
+
+        context = {
+            'form': form
+        }
+
+        return render(request, self.template_name, context)
+
+    def get_object(self):
+        return get_object_or_404(Contacts, pk=self.kwargs.get('pk'))

@@ -23,10 +23,11 @@
             <label for="username" class="form-label">Никнейм</label>
             {{ form.username }}
             <div id="tempHelp" class="form-text">Используется для входа и отображается в профиле</div>
-        </div>
-            {% if form.errors.username %}
+                        {% if form.errors.username %}
         <p>{{ form.errors.username }}</p>
     {% endif %}
+
+        </div>
 
         <div class="mb-3"  align="left">
             <label for="bio" class="form-label">О себе</label>
@@ -37,7 +38,11 @@
         <div class="mb-3"  align="left">
             <label for="formFile" class="form-label">Город</label>
             {{ form.city }}
+                    {% if form.errors.city %}
+        <p>{{ form.errors.city }}</p>
+        {% endif %}
         </div>
+
 
     <div class="blank"></div>
 

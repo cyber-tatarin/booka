@@ -99,7 +99,7 @@ DATABASES = {
         'HOST': env('DB_HOST'),
         'PASSWORD': env('DB_PASSWORD'),
         'PORT': env('DB_PORT'),
-        'USER': env('DB_USER')
+        'USER': env('DB_USER'),
     }
 }
 
@@ -151,3 +151,5 @@ EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
+
+client_encoding: 'UTF8'

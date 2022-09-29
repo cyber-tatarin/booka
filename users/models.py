@@ -4,7 +4,10 @@ from django_resized import ResizedImageField
 
 
 class Cities(models.Model):
-    city = models.CharField(max_length=40, null=True, blank=True)
+    city = models.CharField(max_length=40, null=True, blank=True, unique=True)
+
+    def __str__(self):
+        return self.city
 
 
 class User(AbstractUser):
@@ -17,6 +20,13 @@ class User(AbstractUser):
 
 class Contacts(models.Model):
     userid = models.ForeignKey(User, on_delete=models.CASCADE)
-    contact_type = models.CharField(max_length=25, null=True, blank=True, unique=True)
-    contact = models.CharField(max_length=50, null=True, blank=True, unique=True)
+    contact_type = models.CharField(max_length=20, null=True, blank=True, unique=True)
+    contact = models.CharField(max_length=100, null=True, blank=True)
+    description = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return self.contact
+
+
+
 

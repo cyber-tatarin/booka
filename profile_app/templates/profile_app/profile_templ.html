@@ -9,6 +9,8 @@
 {{searched_user.username}}
 {{searched_user.email}}
 {% if searched_user.id == check_id %}
-    <button type="button" class="btn btn-success">Настройки</button>
+           <li class="nav-item">
+            <a class="nav-link" href="{% url 'profile_app:settings' %}">Настройки</a>
+                </li>
 {% endif %}
 {% endblock %}

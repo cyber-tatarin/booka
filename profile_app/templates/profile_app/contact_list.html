@@ -1,0 +1,58 @@
+{% extends 'lh/base.html' %}
+
+{% block content %}
+
+    <p></p>
+    <h1>Мои контакты</h1>
+    <hr>
+
+    <body class="container">
+        <ul class="list-group">
+            <li class="list-group-item">
+            <a href="{% url 'profile_app:contact-create' %}">Добавить контакт</a>
+            </li>
+        </ul>
+
+        <p></p>
+
+
+        <ul class="list-group">
+            {% for contact in contact_list %}
+            <li class="list-group-item">
+                <p>
+                    <span>{{contact.contact_type}}</span>
+                    (<a href="{% url 'profile_app:contact-update' contact.id %}">Редактировать</a>
+                    |
+                    <a href="#" onclick="document.getElementById({{contact.id}}).style.display='block'">Удалить</a>)
+
+                    <div id={{contact.id}} class="modal">
+                      <span onclick="document.getElementById({{contact.id}}).style.display='none'" class="close" title="Close Modal">&times;</span>
+                      <form class="modal-content" action="{% url 'profile_app:contact-delete' contact.id %}" method="post"> {% csrf_token %}
+
+                        <div class="container">
+                          <h1>Удаление контакта {{contact.contact_type}} </h1>
+                          <p>Вы уверены, что хотите удалить этот контакт?</p>
+
+                          <div class="clearfix">
+                            <button type="button" class="cancelbtn" onclick="document.getElementById('id01').style.display='none'">Нет</button>
+                            <button type="submit" class="deletebtn" onclick="document.getElementById('id01').style.display='none'">Удалить</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                    <p>
+                    {{contact.contact}}
+                    <br>
+                    </p>
+                                    <p>
+                    {{contact.description}}
+                    <br>
+                    </p>
+
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

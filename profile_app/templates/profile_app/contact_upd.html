@@ -1,0 +1,46 @@
+{% extends 'lh/base.html' %}
+
+{% block content %}
+
+    <h1>Изменить контакт</h1>
+    <hr>
+
+    {% if form.errors %}
+        <p>{{ form.errors.error }}</p>
+    {% endif %}
+
+
+<form method="post" enctype="multipart/form-data">
+
+        <div class="mb-3"  align="left">
+            <label for="contact" class="form-label">Контакт</label>
+            {{ form.contact }}
+            <div id="titleHelp" class="form-text"></div>
+        </div>
+
+
+        <div class="form-radio"  align="left">
+            <label for="contactType" class="form-label">Тип контакта</label>
+    {{ form.contact_type }}
+        </div>
+
+
+
+
+    <div class="blank"></div>
+
+        <div class="mb-3"  align="left">
+            <label for="description" class="form-label">Дополнительная информация</label>
+            {{ form.description }}
+            <div id="massHelp" class="form-text">Средняя масса одной вещи ~200 грамм</div>
+        </div>
+
+    <div class="blank"></div>
+
+        {% csrf_token %}
+
+        <button type="submit" class="btn btn-success">Добавить</button>
+
+    </form>
+
+{% endblock %}

@@ -26,7 +26,37 @@ class ProfileUpdateForm(forms.Form):
     def clean_username(self):
         username = self.cleaned_data['username']
 
-        if re.search(r'[^a-z_1234567890]', username):
-            raise forms.ValidationError("Никнейм может состоять только из латинских букв нижнего регистра, цифр и _ ")
+        if re.search(r'[^a-z_.1234567890-]', username):
+            raise forms.ValidationError("Никнейм может состоять только из латинских букв нижнего регистра, цифр и _/-/. ")
 
         return username
+
+    def clean_city(self):
+        city = self.cleaned_data['city']
+
+        if re.search(r'[^а-яА-я-]', city):
+            raise forms.ValidationError("Название города может состоять только из букв и -")
+
+        return city
+
+
+CHOICES = [('Instagram', 'Instagram'),
+           ('Telegram', 'Telegram'),
+           ('Номер телефона', 'Номер телефона')]
+
+
+class ContactCreateForm(forms.Form):
+    contact = forms.CharField(max_length=100, required=False,
+                              widget=forms.TextInput(attrs={'class': 'form-control',
+                                                            'id': "contact",
+                                                            'aria-describedby': "city-help"}))
+
+    contact_type = forms.CharField(widget=forms.RadioSelect(choices=CHOICES, attrs={'class': 'form-control',
+                                                                                   'id': "contactType",
+                                                                                   'aria-describedby': "city-help"}))
+
+    description = forms.CharField(max_length=100, required=False,
+                                  widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                'id': "description",
+                                                                'aria-describedby': "city-help"}))
+
