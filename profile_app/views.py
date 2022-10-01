@@ -17,11 +17,10 @@ class ProfileView(View):
 
     def get(self, request, **kwargs):
         s_user = get_object_or_404(User, id=kwargs['pk'])
-        current_user_id = request.user.id
 
         context = {
             'searched_user': s_user,
-            'check_id': current_user_id
+            'check_id': request.user.id
         }
         return render(request, self.template_name, context)
 

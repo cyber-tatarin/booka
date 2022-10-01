@@ -1,0 +1,30 @@
+{% extends 'lh/base.html' %}
+
+{% block content %}
+
+    <h1>Добавить вещь</h1>
+    <hr>
+
+    {% if form.errors %}
+        <p>{{ form.errors.error }}</p>
+    {% endif %}
+{{ reply.message }}
+
+    <form method="post" enctype="multipart/form-data">
+
+        <div class="mb-3"  align="left">
+            <label for="thing-title" class="form-label">Название</label>
+            {{ form.message }}
+            <div id="titleHelp" class="form-text">Например: Красная кофта ZARA</div>
+        </div>
+
+        <input type="hidden" value="2" name="ntype">
+
+         <button type="submit" class="btn btn-success">Добавить</button>
+
+        {% csrf_token %}
+            </form>
+
+
+
+{% endblock %}

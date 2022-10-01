@@ -1,0 +1,38 @@
+{% extends 'lh/base.html' %}
+
+{% block content %}
+
+    <p></p>
+    <h1>Мои уведомления</h1>
+    <hr>
+
+
+        <ul class="list-group">
+            <li class="list-group-item">
+                <p>
+                    {% for i in received %}
+                    <span>{{i.sender.username}}</span>
+                    <span>{{i.message}}</span>
+                    <span>{{i.time}}</span>
+                {% endfor %}
+                </p>
+            </li>
+
+            <li class="list-group-item">
+                <p>
+                    {% if sent %}
+                    {% for i in sent %}
+                    <span>{{i.receiver.username}}</span>
+                    <span>{{i.message}}</span>
+                    <span>{{i.time}}</span>
+
+
+                    {% endfor %}
+                    {% endif %}
+
+
+                </p>
+            </li>
+    </ul>
+
+{% endblock %}
