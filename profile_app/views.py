@@ -49,7 +49,7 @@ class ProfileUpdateView(LoginRequiredMixin, View):
 
         return render(request, self.template_name, context)
 
-    def post(self, request, **kwargs):
+    def post(self, request):
         form = ProfileUpdateForm(data=request.POST, files=request.FILES)
         curr_user = get_object_or_404(User, id=request.user.id)
 

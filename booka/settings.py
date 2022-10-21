@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'profile_app',
-    'notifications'
+    'notifications',
+    'books'
 ]
 
 MIDDLEWARE = [
@@ -80,8 +81,9 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages'
             ],
         },
     },
@@ -154,3 +156,7 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 
 client_encoding: 'UTF8'
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

@@ -1,0 +1,18 @@
+{% block title %} Books view {% endblock %}
+
+{% block content %}
+    <a href="{% url 'books:book-create' %}" >Добавить книгу</a>
+    <h2>Список книг</h2>
+
+    {% for form in book_list %}
+       <img src="{{MEDIA_URL}}{{form.image}}"><br>
+        Название: {{ form.name }}<br>
+        Автор: {{ form.authors }}<br>
+        Год: {{ form.year }}<br>
+        Язык: {{ form.language }}<br>
+        Описание: <br>
+        {{ form.description }}<br>
+        <a href="{% url 'books:book-update' form.id %}" >Изменить</a> | <a href="{% url 'books:book-delete' form.id %}" >Удалить</a><br>
+    {% endfor %}
+
+{% endblock %}

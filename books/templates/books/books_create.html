@@ -1,0 +1,20 @@
+{% block title %}{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1> Форма добавления книги </h1>
+        <form method="POST"  enctype="multipart/form-data">
+            {% csrf_token %}
+             Изображение:  {{ form.image }} <br>
+             Название:  {{ form.name }} <br>
+             Автор:  {{ form.authors }} <br>
+             Год:  {{ form.year }} <br>
+             Язык:  {{ form.language }} <br>
+             Описание: <br>
+            {{ form.description }}<br>
+            <span>{{ error }}</span>
+            <button class="btn btn-success" type="submit">Добавить!</button>
+            <a href="{% url 'books:book-view'%}" >Отмена</a>
+        </form>
+    </div>
+{% endblock %}
