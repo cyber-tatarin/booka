@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import ListView
-from .forms import UserCreateForm
+from .forms import UserCreateForm, UserLoginForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseForbidden
@@ -33,4 +33,29 @@ class RegisterView(View):
         context = {
             'form': form
         }
+        return render(request, self.template_name, context)
+
+
+class LoginView(View):
+
+    template_name = 'registration/login.html'
+
+    def get(self, request):
+        context = {
+            'form': UserLoginForm()
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = UserLoginForm(request, request.POST)
+
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+
+        context = {
+            'form': form
+        }
+
         return render(request, self.template_name, context)
