@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     'users',
     'profile_app',
     'notifications',
-    'books'
+    'books',
+    'search'
 ]
 
 MIDDLEWARE = [

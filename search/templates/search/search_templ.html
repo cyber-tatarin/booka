@@ -1,0 +1,33 @@
+{% extends 'lh/base.html' %}
+
+{% block content %}
+
+
+<h1>Поиск</h1>
+    <hr>
+
+        <p></p>
+
+        <body class="container">
+            <ul class="list-group">
+                <li class="list-group-item">
+                <form method="get" >
+                    <div class="d-grid gap-2 col-4 mx-auto">
+                        <input name="search" type="search" placeholder="Введите название вещи"
+                                value="{% if search_req %} {{search_req}} {% endif %}">
+                        <button type="submit" class="btn btn-primary">Поиск</button>
+                    </div>
+                </form>
+                </li>
+            </ul>
+            <hr>
+        </body>
+
+{% if search_res %}
+{% for book in search_res %}
+{{ book.name }}
+{{ book.owner.username }}
+{% endfor %}
+{% endif %}
+
+{% endblock %}

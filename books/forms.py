@@ -1,35 +1,31 @@
-from .models import BookModel, AuthorModel, BookAuthorModel
-from django.forms import ModelForm, TextInput, ImageField, Textarea, IntegerField, ModelMultipleChoiceField
+from .models import BookModel, AuthorModel
 from django import forms
 
-class BookCreateForm(ModelForm):
-    class Meta:
-        model = BookModel
-        fields = ['image', 'name', 'year', 'language', 'description', 'authors']
 
-        widgets = {
-            "image": (),
-            "author": TextInput(attrs={
+class BookCreateForm(forms.Form):
+
+    authors = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Автор книги...'
-            }),
-            "name": TextInput(attrs={
+            }))
+    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Название книги...'
-            }),
-            "year": TextInput(attrs={
+            }))
+    year = forms.IntegerField(widget=forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Год...'
-            }),
-            "language": TextInput(attrs={
+            }))
+    language = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Язык...'
-            }),
-            "description": Textarea(attrs={
+            }))
+    description = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Описание...'
-            }),
-        }
+            }))
+
+    image = forms.ImageField(required=False)
 
 
 

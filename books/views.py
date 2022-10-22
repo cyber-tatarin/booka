@@ -6,10 +6,10 @@ from django.views import View
 from django.db.models import Q
 from django.contrib.auth import get_user_model
 from .forms import BookCreateForm
-from .models import BookModel, AuthorModel, BookAuthorModel
+from .models import BookModel, AuthorModel
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect, HttpResponseNotFound
-
+import re
 
 
 class BookListView(View):
@@ -17,24 +17,25 @@ class BookListView(View):
     template_name = 'books/books.html'
 
     def get(self, request, **kwargs):
-        books = BookModel.objects.all().filter(owner=request.user.id)
-        authors = AuthorModel.objects.all()
+        books = BookModel.objects.all()
+        for book in books:
+            print(book.authors.all())
         context = {
             'book_list': books,
-            'author_list': authors
+            'current_user': request.user
         }
 
         return render(request, self.template_name, context)
 
 
-
 class BookCreateView(LoginRequiredMixin, View):
+
     login_url = 'login'
     template_name = 'books/books_create.html'
 
     def get(self, request, **kwargs):
 
-        form = BookCreateForm(request.POST, request.FILES)
+        form = BookCreateForm()
 
         context = {
             'form': form
@@ -48,8 +49,27 @@ class BookCreateView(LoginRequiredMixin, View):
 
         if form.is_valid():
 
+            data = form.cleaned_data
+            book = BookModel(name=data['name'],
+                             year=data['year'],
+                             language=data['language'],
+                             description=data['description'],
+                             owner=request.user
+                             )
 
-            form.save()
+            if data['image']:
+                book.image = data['image']
+
+            book.save()
+
+            upper_author_str = data['authors'].upper()
+            upper_author_list = re.split(' , |, |,', upper_author_str)
+
+            for author in upper_author_list:
+                buf = AuthorModel.objects.get_or_create(name=author)
+                book.authors.add(buf[0])
+                print(book.authors)
+
             return redirect('books:book-view')
 
         context = {
@@ -59,18 +79,24 @@ class BookCreateView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-
 class BookUpdateView(LoginRequiredMixin, View):
     login_url = 'login'
     template_name = 'books/books_update.html'
 
     def get(self, request, **kwargs):
 
-        book = get_object_or_404(BookModel, id=self.kwargs.get('pk'))
-        authors = AuthorModel.objects.all()
+        authors_list = []
+
+        book = get_object_or_404(BookModel, id=self.kwargs.get('pk'), owner=request.user, book_type=1)
+        authors_query_list = book.authors.all()
+
+        for author in authors_query_list:
+            authors_list.append(author.name)
+        authors = ', '.join(authors_list)
+
         form = BookCreateForm(initial={
             'image': book.image,
-            'authors': book.authors,
+            'authors': authors,
             'name': book.name,
             'year': book.year,
             'language': book.language,
@@ -83,19 +109,31 @@ class BookUpdateView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, **kwargs):
+
         form = BookCreateForm(data=request.POST, files=request.FILES)
-        book = get_object_or_404(BookModel, id=self.kwargs.get('pk'))
+        book = get_object_or_404(BookModel, id=self.kwargs.get('pk'), owner=request.user, book_type=1)
 
         if form.is_valid():
             data = form.cleaned_data
             book.name = data['name']
             book.year = data['year']
-            book.authors = data['authors']
+
             book.language = data['language']
             book.description = data['description']
+
             if data['image']:
                 book.image = data['image']
+
+            upper_author_str = data['authors'].upper()
+            upper_author_list = re.split(' , |, |,', upper_author_str)
+            book.authors.clear()
+
+            for author in upper_author_list:
+                buf = AuthorModel.objects.get_or_create(name=author)
+                book.authors.add(buf[0])
+
             book.save()
+
             return redirect('books:book-view')
 
         context = {
@@ -105,12 +143,11 @@ class BookUpdateView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-
 class BookDeleteView(LoginRequiredMixin, DeleteView):
     login_url = 'login'
 
     def get_queryset(self):
-        queryset = BookModel.objects.all().filter(owner=self.request.user, id=self.kwargs.get('pk'))
+        queryset = BookModel.objects.all().filter(owner=self.request.user, id=self.kwargs.get('pk'), book_type=1)
         return queryset
 
     def get_success_url(self):
@@ -118,13 +155,3 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_template_names(self):
         return 'books/books_delete.html'
-
-
-
-
-
-
-
-
-
-

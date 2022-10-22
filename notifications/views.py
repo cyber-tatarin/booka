@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.contrib.auth import get_user_model
 from .forms import NotifCreateForm
 from .models import Notifications
+from books.models import BookModel
 
 User = get_user_model()
 
@@ -21,12 +22,14 @@ class NotifCreateView(LoginRequiredMixin, View):
             return redirect('notification:notif-list')
 
         receiver = get_object_or_404(User, id=kwargs['pk'])
+        book = get_object_or_404(BookModel, id=kwargs['bookid'])
         # добавить подтверждение, что такая книга существует
 
         form = NotifCreateForm()
 
         context = {
             'form': form,
+            'receiver': receiver
         }
 
         return render(request, self.template_name, context)
@@ -34,16 +37,19 @@ class NotifCreateView(LoginRequiredMixin, View):
     def post(self, request, **kwargs):
         form = NotifCreateForm(data=request.POST, files=request.FILES)
 
+        book = get_object_or_404(BookModel, id=kwargs['bookid'])
+
         if form.is_valid():
             data = form.cleaned_data
             receiver = get_object_or_404(User, id=kwargs['pk'])
             notif = Notifications(message=data['message'],
                                   sender=request.user,
                                   receiver=receiver,
-                                  ntype=request.POST['ntype'])
+                                  ntype=request.POST['ntype'],
+                                  book=book)
             notif.save()
 
-            return redirect(f'/profile/{receiver.id}')
+            return redirect(f'/profile/books/{receiver.id}')
 
         context = {
             'form': form,
@@ -52,19 +58,32 @@ class NotifCreateView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-class NotifList(LoginRequiredMixin, View):
+class SentNotifList(LoginRequiredMixin, View):
+
     login_url = 'login'
-    template_name = 'notifications/list_notif.html'
+    template_name = 'notifications/sent_list_notif.html'
 
     def get(self, request, **kwargs):
 
-        received = Notifications.objects.all().filter(receiver=request.user)
         sent = Notifications.objects.all().filter(sender=request.user)
 
         context = {
-            'received': received,
             'sent': sent
         }
 
         return render(request, self.template_name, context)
 
+
+class ReceivedNotifList(LoginRequiredMixin, View):
+
+    login_url = 'login'
+    template_name = 'notifications/received_list_notif.html'
+
+    def get(self, request, **kwargs):
+        received = Notifications.objects.all().filter(receiver=request.user)
+
+        context = {
+            'received': received,
+        }
+
+        return render(request, self.template_name, context)

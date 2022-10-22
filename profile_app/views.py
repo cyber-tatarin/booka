@@ -7,20 +7,53 @@ from django.db.models import Q
 from django.contrib.auth import get_user_model
 from .forms import ProfileUpdateForm, ContactCreateForm
 from users.models import Cities, Contacts
+from books.models import BookModel
 from django.core.exceptions import ObjectDoesNotExist
 
 User = get_user_model()
 
 
-class ProfileView(View):
-    template_name = 'profile_app/profile_templ.html'
+class ProfileBooksView(View):
+    template_name = 'profile_app/profilebooks_templ.html'
 
     def get(self, request, **kwargs):
         s_user = get_object_or_404(User, id=kwargs['pk'])
+        books = BookModel.objects.all().filter(owner=s_user, book_type=1)
+        print(books)
+        context = {
+            'searched_user': s_user,
+            'check_id': request.user.id,
+            'books': books
+        }
+        return render(request, self.template_name, context)
+
+
+class ProfileWishView(View):
+    template_name = 'profile_app/profilewish_templ.html'
+
+    def get(self, request, **kwargs):
+        s_user = get_object_or_404(User, id=kwargs['pk'])
+        books = BookModel.objects.all().filter(owner=s_user, book_type=2)
 
         context = {
             'searched_user': s_user,
-            'check_id': request.user.id
+            'check_id': request.user.id,
+            'books': books
+        }
+        return render(request, self.template_name, context)
+
+
+class ProfileContactsView(View):
+    template_name = 'profile_app/profilecontacts_templ.html'
+
+    def get(self, request, **kwargs):
+        s_user = get_object_or_404(User, id=kwargs['pk'])
+        contacts = Contacts.objects.all().filter(userid=s_user)
+
+        context = {
+            'searched_user': s_user,
+            'check_id': request.user.id,
+            'contacts': contacts
         }
         return render(request, self.template_name, context)
 
@@ -68,7 +101,7 @@ class ProfileUpdateView(LoginRequiredMixin, View):
                 curr_user.photo = data['photo']
             curr_user.save()
 
-            return redirect(f'/profile/{request.user.id}')
+            return redirect(f'/profile/books/{request.user.id}')
 
         context = {
             'form': form,
@@ -178,3 +211,6 @@ class ContactUpdateView(LoginRequiredMixin, View):
 
     def get_object(self):
         return get_object_or_404(Contacts, pk=self.kwargs.get('pk'))
+
+
+

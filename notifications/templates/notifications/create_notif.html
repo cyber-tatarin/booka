@@ -8,7 +8,9 @@
     {% if form.errors %}
         <p>{{ form.errors.error }}</p>
     {% endif %}
-{{ reply.message }}
+
+
+    <p> Сообщение для {{ receiver.username }}
 
     <form method="post" enctype="multipart/form-data">
 

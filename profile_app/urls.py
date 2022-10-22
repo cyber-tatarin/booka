@@ -1,14 +1,16 @@
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from .views import ProfileView, ProfileUpdateView, SettingsView, ContactCreateView, \
-    ContactListView, ContactDeleteView, ContactUpdateView
+from .views import ProfileBooksView, ProfileUpdateView, SettingsView, ContactCreateView, \
+    ContactListView, ContactDeleteView, ContactUpdateView, ProfileContactsView, ProfileWishView
 
 
 app_name = 'profile_app'
 urlpatterns = [
 
-    path('<int:pk>', ProfileView.as_view(), name='profile'),
+    path('books/<int:pk>', ProfileBooksView.as_view(), name='books-profile'),
+    path('contacts/<int:pk>', ProfileContactsView.as_view(), name='contacts-profile'),
+    path('wish/<int:pk>', ProfileWishView.as_view(), name='wish-profile'),
     path('update/', ProfileUpdateView.as_view(), name='profile-update'),
     path('settings/', SettingsView.as_view(), name='settings'),
     path('settings/contacts/create', ContactCreateView.as_view(), name='contact-create'),

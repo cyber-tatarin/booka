@@ -25,7 +25,8 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('profile/', include('profile_app.urls')),
     path('notification/', include('notifications.urls')),
-    path('books/', include('books.urls'))
+    path('books/', include('books.urls')),
+    path('search/', include('search.urls'))
 ]
 
 if settings.DEBUG:
