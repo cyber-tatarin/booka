@@ -18,6 +18,10 @@
 {{ contact.contact_type }}
 {{ contact.contact }}
 {{ contact.description }}
+{% if searched_user.id == check_id %}
+        <a href="{% url 'profile_app:contact-update' contact.id %}" >Изменить</a> | <a href="{% url 'profile_app:contact-delete' contact.id type %}" >Удалить</a>
+<br>
+{% endif %}
 
 <br>
 <br>

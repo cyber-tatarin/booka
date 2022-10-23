@@ -1,13 +1,12 @@
 {% block title %} Books view {% endblock %}
 
 {% block content %}
-    <a href="{% url 'books:book-create' type %}" >Добавить книгу</a>
+    <a href="{% url 'books:book-create' type %}" >Добавить книгу в виш лист</a>
     <h2>Список книг</h2>
 
     {% for book in book_list %}
-       {% if book.image %}
-<img src="{{MEDIA_URL}}{{book.image}}"><br>
-        {% endif %}
+       <img src="{{MEDIA_URL}}{{book.image}}"><br>
+
         Название: {{ book.name }}<br>
 
         Автор:
@@ -19,14 +18,10 @@
 
         Год: {{ book.year }}<br>
         Язык: {{ book.language }}<br>
-        Владелец: {{ book.owner.username }}
-        Описание: <br>
-        {{ book.description }}<br>
+
+
         {% if current_user.id == book.owner.id %}
         <a href="{% url 'books:book-update' book.id %}" >Изменить</a> | <a href="{% url 'books:book-delete' book.id type %}" >Удалить</a><br>
-
-        {% else %}
-        <a href="{% url 'notification:notif-create' book.owner.id book.id %}"> Запросить книгу </a>
 
         {% endif %}
     {% endfor %}

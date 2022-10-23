@@ -10,6 +10,12 @@
         <h1> Форма добавления книги </h1>
         <form method="POST"  enctype="multipart/form-data">
             {% csrf_token %}
+            <input type="hidden" name="book_type" value="
+{% if type == 2%}
+{{2}}
+{% endif %}
+"
+            >
                 {{form}}
             <button class="btn btn-success" type="submit">Добавить!</button>
             <a href="{% url 'books:book-view'%}" >Отмена</a>

@@ -17,12 +17,12 @@ class BookListView(View):
     template_name = 'books/books.html'
 
     def get(self, request, **kwargs):
-        books = BookModel.objects.all()
-        for book in books:
-            print(book.authors.all())
+        books = BookModel.objects.all().filter(book_type=1)
+
         context = {
             'book_list': books,
-            'current_user': request.user
+            'current_user': request.user,
+            'type': 1
         }
 
         return render(request, self.template_name, context)
@@ -38,12 +38,13 @@ class BookCreateView(LoginRequiredMixin, View):
         form = BookCreateForm()
 
         context = {
-            'form': form
+            'form': form,
+            'type': kwargs['type']
         }
 
         return render(request, self.template_name, context)
 
-    def post(self, request):
+    def post(self, request, **kwargs):
 
         form = BookCreateForm(request.POST, request.FILES)
 
@@ -54,7 +55,8 @@ class BookCreateView(LoginRequiredMixin, View):
                              year=data['year'],
                              language=data['language'],
                              description=data['description'],
-                             owner=request.user
+                             owner=request.user,
+                             book_type=kwargs['type']
                              )
 
             if data['image']:
@@ -134,7 +136,10 @@ class BookUpdateView(LoginRequiredMixin, View):
 
             book.save()
 
-            return redirect('books:book-view')
+            if book.book_type == 1:
+                return redirect('books:book-view')
+            else:
+                return redirect('books:wish-book-view')
 
         context = {
             'form': form
@@ -147,11 +152,31 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
     login_url = 'login'
 
     def get_queryset(self):
-        queryset = BookModel.objects.all().filter(owner=self.request.user, id=self.kwargs.get('pk'), book_type=1)
+        queryset = BookModel.objects.all().filter(owner=self.request.user, id=self.kwargs.get('pk'),
+                                                  book_type=self.kwargs.get('type'))
         return queryset
 
     def get_success_url(self):
-        return reverse('books:book-view')
+        if self.kwargs.get('type') == 1:
+            return reverse('books:book-view')
+        else:
+            return reverse('books:wish-book-view')
 
     def get_template_names(self):
         return 'books/books_delete.html'
+
+
+class WishBookListView(View):
+    login_url = 'login'
+    template_name = 'books/wish_books.html'
+
+    def get(self, request, **kwargs):
+        books = BookModel.objects.all().filter(book_type=2, owner=request.user)
+
+        context = {
+            'book_list': books,
+            'current_user': request.user,
+            'type': 2
+        }
+
+        return render(request, self.template_name, context)

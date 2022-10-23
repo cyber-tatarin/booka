@@ -28,4 +28,3 @@ class BookCreateForm(forms.Form):
     image = forms.ImageField(required=False)
 
 
-
