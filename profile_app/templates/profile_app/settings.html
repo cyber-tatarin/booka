@@ -6,11 +6,8 @@
     <hr>
  <a class="nav-link" href="{% url 'profile_app:profile-update' %}">Редактировать  профиль</a>
  <a class="nav-link" href="{% url 'profile_app:contact-list' %}">Контакты</a>
- <a class="nav-link" href="">Сменить пароль</a>
-<p></p>
- <a class="nav-link" href="">Написать в техподдержку</a>
-
-
+ <a class="nav-link" href="{% url 'profile_app:password-change' %}">Сменить пароль</a>
+ <a class="nav-link" href="{% url 'profile_app:technical-support' %}">Написать в техподдержку</a>
 
         <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
