@@ -16,7 +16,9 @@
 {% endif %}
 "
             >
-                {{form}}
+            <label for="authors_field">Авторы</label>
+                {{form.authors}}
+
             <button class="btn btn-success" type="submit">Добавить!</button>
             <a href="{% url 'books:book-view'%}" >Отмена</a>
         </form>

@@ -20,7 +20,7 @@
 {% for book in books %}
 {{ book.name }}
 {% if searched_user.id == check_id %}
-        <a href="{% url 'books:book-update' book.id %}" >Изменить</a> | <a href="{% url 'books:book-delete' book.id type %}" >Удалить</a><br>
+        <a href="{% url 'books:book-update' book.id %}" >Изменить</a> | <a href="{% url 'books:book-delete' book.id %}" >Удалить</a><br>
 {% else %}
 <a href="{% url 'notification:notif-create' searched_user.id book.id %}"> Запросить книгу </a>
 {% endif %}

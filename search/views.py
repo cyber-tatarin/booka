@@ -21,6 +21,6 @@ class BookSearchView(View):
 
         context = {
             'search_res': queryset,
-            'search_req' : search_req
+            'search_req': search_req
         }
         return render(request, self.template_name, context)

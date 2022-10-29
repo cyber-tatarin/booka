@@ -23,7 +23,7 @@
         Описание: <br>
         {{ book.description }}<br>
         {% if current_user.id == book.owner.id %}
-        <a href="{% url 'books:book-update' book.id %}" >Изменить</a> | <a href="{% url 'books:book-delete' book.id type %}" >Удалить</a><br>
+        <a href="{% url 'books:book-update' book.id %}" >Изменить</a> | <a href="{% url 'books:book-delete' book.id %}" >Удалить</a><br>
 
         {% else %}
         <a href="{% url 'notification:notif-create' book.owner.id book.id %}"> Запросить книгу </a>

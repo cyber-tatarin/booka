@@ -5,6 +5,7 @@ from django import forms
 class BookCreateForm(forms.Form):
 
     authors = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
+                'id': 'authors_field',
                 'class': 'form-control',
                 'placeholder': 'Автор книги...'
             }))

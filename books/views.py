@@ -152,8 +152,7 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
     login_url = 'login'
 
     def get_queryset(self):
-        queryset = BookModel.objects.all().filter(owner=self.request.user, id=self.kwargs.get('pk'),
-                                                  book_type=self.kwargs.get('type'))
+        queryset = BookModel.objects.all().filter(owner=self.request.user, id=self.kwargs.get('pk'))
         return queryset
 
     def get_success_url(self):
