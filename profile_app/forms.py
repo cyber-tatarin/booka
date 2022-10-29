@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 import re
-
+from django.contrib.auth.forms import SetPasswordForm
 
 class ProfileUpdateForm(forms.Form):
     username = forms.CharField(max_length=100, required=True,
@@ -60,3 +60,12 @@ class ContactCreateForm(forms.Form):
                                                                 'id': "description",
                                                                 'aria-describedby': "city-help"}))
 
+class UserPasswordChangeForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'autocomplete': 'off'
+            })

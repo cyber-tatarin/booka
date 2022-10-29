@@ -2,7 +2,9 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 from .views import ProfileBooksView, ProfileUpdateView, SettingsView, ContactCreateView, \
-    ContactListView, ContactDeleteView, ContactUpdateView, ProfileContactsView, ProfileWishView
+    ContactListView, ContactDeleteView, ContactUpdateView, ProfileContactsView, ProfileWishView, UserPasswordChangeView, \
+    UserPasswordChangeDoneView, TechnicalSupportView
+
 
 
 app_name = 'profile_app'
@@ -16,8 +18,10 @@ urlpatterns = [
     path('settings/contacts/create', ContactCreateView.as_view(), name='contact-create'),
     path('settings/contacts/list', ContactListView.as_view(), name='contact-list'),
     path('settings/contacts/delete/<int:pk>', ContactDeleteView.as_view(), name='contact-delete'),
-    path('settings/contacts/update/<int:pk>', ContactUpdateView.as_view(), name='contact-update')
-
+    path('settings/contacts/update/<int:pk>', ContactUpdateView.as_view(), name='contact-update'),
+    path('settings/password_change/', UserPasswordChangeView.as_view(), name='password-change'),
+    path('settings/password_change/done/', UserPasswordChangeDoneView.as_view(), name='password-change-done'),
+    path('settings/technical_support/', TechnicalSupportView.as_view(), name='technical-support')
     ]
 
 if settings.DEBUG:
