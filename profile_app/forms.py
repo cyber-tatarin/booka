@@ -3,8 +3,8 @@ from django import forms
 import re
 from django.contrib.auth.forms import SetPasswordForm
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import authenticate, get_user_model, password_validation
-from django.core.exceptions import ValidationError
+from django.contrib.auth import password_validation
+
 class ProfileUpdateForm(forms.Form):
     username = forms.CharField(max_length=100, required=True,
                                widget=forms.TextInput(attrs={'class': 'form-control',
@@ -62,11 +62,7 @@ class ContactCreateForm(forms.Form):
                                                                 'id': "description",
                                                                 'aria-describedby': "city-help"}))
 
-class UserPasswordChangeForm(forms.Form):
-
-    error_messages = {
-        "password_mismatch": _("The two password fields didn’t match."),
-    }
+class UserPasswordChangeForm(SetPasswordForm):
 
     new_password1 = forms.CharField(
         label=_("New password"),
@@ -81,27 +77,8 @@ class UserPasswordChangeForm(forms.Form):
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
     )
 
-    def clean_new_password2(self):
-        password1 = self.cleaned_data.get("new_password1")
-        password2 = self.cleaned_data.get("new_password2")
-        if password1 and password2:
-            if password1 != password2:
-                raise ValidationError(
-                    self.error_messages["password_mismatch"],
-                    code="password_mismatch",
-                )
-        password_validation.validate_password(password2, self.user)
-        return password2
+    def __init__(self, *args, **kwargs):
 
-    def save(self, commit=True):
-        password = self.cleaned_data["new_password1"]
-        self.user.set_password(password)
-        if commit:
-            self.user.save()
-        return self.user
-
-    def __init__(self, user, *args, **kwargs):
-        self.user = user
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({
