@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 import re
-from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import password_validation
 
@@ -62,7 +62,15 @@ class ContactCreateForm(forms.Form):
                                                                 'id': "description",
                                                                 'aria-describedby': "city-help"}))
 
-class UserPasswordChangeForm(SetPasswordForm):
+class UserPasswordChangeForm(PasswordChangeForm):
+
+    old_password = forms.CharField(
+        label=_("Old password"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={"autocomplete": "current-password", "autofocus": True}
+        ),
+    )
 
     new_password1 = forms.CharField(
         label=_("New password"),
