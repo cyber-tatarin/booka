@@ -10,6 +10,7 @@ from .models import BookModel, AuthorModel
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 import re
+from users.models import Contacts
 
 
 class BookListView(View):
@@ -17,10 +18,18 @@ class BookListView(View):
     template_name = 'books/books.html'
 
     def get(self, request, **kwargs):
+        contact_list = []
         books = BookModel.objects.all().filter(book_type=1)
+        if books:
+            for book in books:
+                try:
+                    buf = Contacts.objects.filter(userid=book.owner)[0]
+                except:
+                    buf = 0
+                contact_list.append(buf)
 
         context = {
-            'book_list': books,
+            'book_list': zip(books, contact_list),
             'current_user': request.user,
             'type': 1
         }

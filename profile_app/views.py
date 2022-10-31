@@ -11,8 +11,6 @@ from books.models import BookModel
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.views import PasswordChangeView
 
-
-
 User = get_user_model()
 
 
@@ -217,24 +215,28 @@ class ContactUpdateView(LoginRequiredMixin, View):
 
 
 class UserPasswordChangeView(PasswordChangeView):
-
     form_class = UserPasswordChangeForm
     template_name = 'profile_app/password_change.html'
     success_message = 'Ваш пароль был успешно изменён!'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Изменение пароля на сайте'
         return context
+
     def get_success_url(self):
         return reverse('profile_app:password-change-done')
 
-class UserPasswordChangeDoneView(PasswordChangeView):
 
+class UserPasswordChangeDoneView(PasswordChangeView):
     template_name = 'profile_app/password_change_done.html'
+
     def get_success_url(self, request):
         return redirect(request, self.template_name)
-class TechnicalSupportView(View):
 
+
+class TechnicalSupportView(View):
     template_name = 'profile_app/technical_support.html'
+
     def get(self, request):
         return render(request, self.template_name)

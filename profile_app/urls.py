@@ -6,8 +6,8 @@ from .views import ProfileBooksView, ProfileUpdateView, SettingsView, ContactCre
     UserPasswordChangeDoneView, TechnicalSupportView
 
 
-
 app_name = 'profile_app'
+
 urlpatterns = [
 
     path('books/<int:pk>', ProfileBooksView.as_view(), name='books-profile'),

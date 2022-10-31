@@ -1,34 +1,107 @@
-{% block title %} Books view {% endblock %}
-
+<!DOCTYPE html>
+{% load static %}
 {% block content %}
-    <a href="{% url 'books:book-create' type %}" >Добавить книгу</a>
-    <h2>Список книг</h2>
+<html lang="en">
 
-    {% for book in book_list %}
-       {% if book.image %}
-<img src="{{MEDIA_URL}}{{book.image}}"><br>
-        {% endif %}
-        Название: {{ book.name }}<br>
 
-        Автор:
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400,700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
 
-        {% for author in book.authors.all %}
-        {{ author.name }} <br>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="common-rectangle">
+                <div class="rectangle-main"></div>
+            </div>
 
-        {% endfor %}
 
-        Год: {{ book.year }}<br>
-        Язык: {{ book.language }}<br>
-        Владелец: {{ book.owner.username }}
-        Описание: <br>
-        {{ book.description }}<br>
-        {% if current_user.id == book.owner.id %}
-        <a href="{% url 'books:book-update' book.id %}" >Изменить</a> | <a href="{% url 'books:book-delete' book.id %}" >Удалить</a><br>
+        <div class="main-content-book">
+            <p class="lenta">Лента всех-всех книг </p>
 
-        {% else %}
-        <a href="{% url 'notification:notif-create' book.owner.id book.id %}"> Запросить книгу </a>
+    {% for book, contact in book_list %}
+        <section>
+            <div class="book-container">
+                <div class="book-attributes">
+                    <p class="caption">{{book.name}}</p>
+                    <p class="authors">
+                        {% for author in book.authors.all %}
+                        — {{author.name}}
+                        {% endfor %}
+                    </p>
+                    <div class="info1">
+                        <img class="icon1" src="{{MEDIA_URL}}images/user.png">
+                        <span class="profile-name">{{book.owner.username}}</span>
 
-        {% endif %}
-    {% endfor %}
+                    </div>
+                    {% if book.description %}
+                    <p class="comment">{{book.description}}</p>
+                    {% endif %}
+                    {% if book.image %}
+                    <div class="book-photo">
+                        <img class="book-image" src="{{MEDIA_URL}}{{book.image}}">
+                    </div>
+                    {% endif %}
+                    <div class="books-icons">
+                        {% if book.city %}
+                        <div class="info2"><img class="icon2" src="{{MEDIA_URL}}images/placeholder.png"><span class="description">{{book.city}}</span></div>
+                        {% else %}
+                        <div class="info2"><img class="icon2" src="{{MEDIA_URL}}images/placeholder.png"><span class="description">Не указано</span></div>
+                        {% endif %}
+                        {% if contact %}
+                        <div class="info3"><img class="icon3" src="{{MEDIA_URL}}images/smartphone.png"><span class="description">{{contact.contact_type}}: {{contact.contact}}</span></div>
+                        {% else %}
+                        <div class="info3"><img class="icon3" src="{{MEDIA_URL}}images/smartphone.png"><span class="description">Не указано</span></div>
+                        {% endif %}
+                        <div class="info4"><img class="icon4" src="{{MEDIA_URL}}images/chat.png"><span class="description">{{book.language}}</span>
+                            {% if book.year %}
+                            <img class="icon5" src="{{MEDIA_URL}}images/folder.png"><span class="description">{{book.year}}</span>
+                            {% else %}
+                            <img class="icon5" src="{{MEDIA_URL}}images/folder.png"><span class="description">Не указано</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if current_user != book.owner %}
+                <button class="button-add">
+                        <p class="button-p">Запросить книгу через сайт</p>
+                </button>
+                    {% endif %}
+                </div>
+
+            </div>
+        </section>
+{% endfor %}
+
+        </div>
+
+        <div class="bottom-rectangle">
+
+            <div class="home-with-point">
+                <div class="point-home "> </div>
+                <a class="home-icon" href="lenta_mob.html" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
+            </div>
+            <a class="search-icon" href="poisk_s_zaprosom.html" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
+            <a class="mail-icon" href="moi_zaprosu_get.html" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
+            <a href="moi_zaprosu.html" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
+            <a href="#" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a>
+
+        </div>
+
+        </div>
+    </header>
+</body>
+</html>
 
 {% endblock %}
+

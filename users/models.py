@@ -13,7 +13,7 @@ class Cities(models.Model):
 class User(AbstractUser):
     email = models.EmailField(null=True, blank=False, unique=True)
     photo = ResizedImageField(size=[500, 500], crop=['middle', 'center'], quality=99,
-                              blank=True, null=True, upload_to='images')
+                              blank=False, null=True, upload_to='images')
     bio = models.CharField(max_length=200, null=True, blank=True)
     city = models.ForeignKey(Cities, on_delete=models.SET_NULL, null=True)
 
