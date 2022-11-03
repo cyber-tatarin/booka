@@ -17,7 +17,7 @@ class UserCreateForm(UserCreationForm):
                                  'placeholder': 'E-mail address',
                              }))
 
-    username = forms.CharField(max_length=100, required=True,
+    username = forms.CharField(max_length=20, required=True,
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'id': "username",
                                                              'aria-describedby': "username-help"}))
@@ -50,7 +50,7 @@ class UserLoginForm(AuthenticationForm):
         self.error_messages['invalid_login'] = 'Неправильный логин или пароль'
         super().__init__(*args, **kwargs)
 
-    username = forms.CharField(max_length=100, required=True,
+    username = forms.CharField(max_length=20, required=True,
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'id': "username",
                                                              'aria-describedby': "username-help"}))

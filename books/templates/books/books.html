@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400,700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styleb.css' %}">
     <title>Document</title>
 </head>
 
@@ -40,9 +40,9 @@
                         — {{author.name}}
                         {% endfor %}
                     </p>
-                    <div class="info1">
+                    <div class="info1-change">
                         <img class="icon1" src="{{MEDIA_URL}}images/user.png">
-                        <span class="profile-name">{{book.owner.username}}</span>
+                        <a href="{% url 'profile_app:books-profile' book.owner.id %}" class="profile-name">{{book.owner.username}}</a>
 
                     </div>
                     {% if book.description %}
@@ -72,15 +72,20 @@
                             {% endif %}
                         </div>
                     </div>
+
                     {% if current_user != book.owner %}
+                    <a href="{% url 'notification:notif-create' book.owner.id book.id %}">
                 <button class="button-add">
                         <p class="button-p">Запросить книгу через сайт</p>
                 </button>
+                    </a>
                     {% endif %}
+
                 </div>
 
             </div>
         </section>
+
 {% endfor %}
 
         </div>
@@ -89,12 +94,12 @@
 
             <div class="home-with-point">
                 <div class="point-home "> </div>
-                <a class="home-icon" href="lenta_mob.html" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
+                <a class="home-icon" href="{% url 'books:book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
             </div>
-            <a class="search-icon" href="poisk_s_zaprosom.html" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
-            <a class="mail-icon" href="moi_zaprosu_get.html" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
-            <a href="moi_zaprosu.html" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
-            <a href="#" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a>
+            <a class="search-icon" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
+            <a class="mail-icon" href="{% url 'notification:received-notif-list' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
+            <a href="{% url 'books:wish-book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
+            <a href="{% url 'profile_app:books-profile' current_user.id %}" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a>
 
         </div>
 

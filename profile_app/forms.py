@@ -5,6 +5,8 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model, password_validation
 from django.core.exceptions import ValidationError
+
+
 class ProfileUpdateForm(forms.Form):
     username = forms.CharField(max_length=100, required=True,
                                widget=forms.TextInput(attrs={'class': 'form-control',

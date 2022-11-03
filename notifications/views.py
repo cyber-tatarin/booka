@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from .forms import NotifCreateForm
 from .models import Notifications
 from books.models import BookModel
+from users.models import Contacts
 
 User = get_user_model()
 
@@ -19,11 +20,10 @@ class NotifCreateView(LoginRequiredMixin, View):
     def get(self, request, **kwargs):
 
         if request.user.id == kwargs['pk']:
-            return redirect('notification:notif-list')
+            return redirect('books:book-view')
 
         receiver = get_object_or_404(User, id=kwargs['pk'])
         book = get_object_or_404(BookModel, id=kwargs['bookid'])
-        # добавить подтверждение, что такая книга существует
 
         form = NotifCreateForm()
 
@@ -35,7 +35,7 @@ class NotifCreateView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, **kwargs):
-        form = NotifCreateForm(data=request.POST, files=request.FILES)
+        form = NotifCreateForm(data=request.POST)
 
         book = get_object_or_404(BookModel, id=kwargs['bookid'])
 
@@ -49,7 +49,7 @@ class NotifCreateView(LoginRequiredMixin, View):
                                   book=book)
             notif.save()
 
-            return redirect(f'/profile/books/{receiver.id}')
+            return redirect(reverse('notification:sent-notif-list'))
 
         context = {
             'form': form,
@@ -65,7 +65,7 @@ class SentNotifList(LoginRequiredMixin, View):
 
     def get(self, request, **kwargs):
 
-        sent = Notifications.objects.all().filter(sender=request.user)
+        sent = Notifications.objects.all().filter(sender=request.user).order_by('-time')
 
         context = {
             'sent': sent
@@ -80,10 +80,25 @@ class ReceivedNotifList(LoginRequiredMixin, View):
     template_name = 'notifications/received_list_notif.html'
 
     def get(self, request, **kwargs):
-        received = Notifications.objects.all().filter(receiver=request.user)
+
+        contact_list = []
+
+        received = Notifications.objects.all().filter(receiver=request.user).order_by('-time')
+        received_list = 0
+
+        if received:
+            for notif in received:
+                try:
+                    buf = Contacts.objects.filter(userid=notif.book.owner)[0]
+                except:
+                    buf = 0
+                contact_list.append(buf)
+
+            received_list = zip(received, contact_list)
 
         context = {
-            'received': received,
+            'received': received_list,
+            'userid': request.user.id
         }
 
         return render(request, self.template_name, context)

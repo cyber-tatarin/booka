@@ -1,33 +1,161 @@
-{% extends 'lh/base.html' %}
+<!DOCTYPE html>
 
+{% load static %}
 {% block content %}
 
+<html lang="en">
 
-<h1>Поиск</h1>
-    <hr>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400,700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styleb.css' %}">
+    <title>Document</title>
+</head>
 
-        <p></p>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="common-rectangle">
+                <div class="rectangle-main"></div>
+            </div>
+            <form class="search" method="get">
+                <input name="search" class="inner-search" type="text" maxlength="100" placeholder="Введите название книги или автора" required
+                value="{% if search_req %} {{search_req}} {% endif %}">
+                <button class="button-search" id="circle" type="submit">
+                    <img class="img-search" src="{{MEDIA_URL}}images/search.png" >
+                </button>
+            </form>
 
-        <body class="container">
-            <ul class="list-group">
-                <li class="list-group-item">
-                <form method="get" >
-                    <div class="d-grid gap-2 col-4 mx-auto">
-                        <input name="search" type="search" placeholder="Введите название вещи"
-                                value="{% if search_req %} {{search_req}} {% endif %}">
-                        <button type="submit" class="btn btn-primary">Поиск</button>
+                {% if not search_req %}
+        <div class="main-content-search">
+            <div class="greeting-container">
+            <p class="greeting">Результат поиска
+                </p>
+
+                <p class="lets-try">Давайте попробуем<br> найти то, что Вы<br>хотите :))
+                </p>
+            </div>
+        </div>
+
+            {% else %}
+
+                {% if book_list %}
+            <div class="main-content-book">
+            <p class="lenta">Результат поиска</p>
+
+            {% for book, contact in book_list %}
+       <section>
+            <div class="book-container">
+                <div class="book-attributes">
+                    <p class="caption">{{book.name}}</p>
+                    <p class="authors">
+                        {% for author in book.authors.all %}
+                        — {{author.name}}
+                        {% endfor %}
+                    </p>
+                    <div class="info1-change">
+                        <img class="icon1" src="{{MEDIA_URL}}images/user.png">
+                        <a href="{% url 'profile_app:books-profile' book.owner.id %}" class="profile-name">{{book.owner.username}}</a>
+
                     </div>
-                </form>
-                </li>
-            </ul>
-            <hr>
-        </body>
+                    {% if book.description %}
+                    <p class="comment">{{book.description}}</p>
+                    {% endif %}
+                    {% if book.image %}
+                    <div class="book-photo">
+                        <img class="book-image" src="{{MEDIA_URL}}{{book.image}}">
+                    </div>
+                    {% endif %}
+                    <div class="books-icons">
+                        {% if book.city %}
+                        <div class="info2"><img class="icon2" src="{{MEDIA_URL}}images/placeholder.png"><span class="description">{{book.city}}</span></div>
+                        {% else %}
+                        <div class="info2"><img class="icon2" src="{{MEDIA_URL}}images/placeholder.png"><span class="description">Не указано</span></div>
+                        {% endif %}
+                        {% if contact %}
+                        <div class="info3"><img class="icon3" src="{{MEDIA_URL}}images/smartphone.png"><span class="description">{{contact.contact_type}}: {{contact.contact}}</span></div>
+                        {% else %}
+                        <div class="info3"><img class="icon3" src="{{MEDIA_URL}}images/smartphone.png"><span class="description">Не указано</span></div>
+                        {% endif %}
+                        <div class="info4"><img class="icon4" src="{{MEDIA_URL}}images/chat.png"><span class="description">{{book.language}}</span>
+                            {% if book.year %}
+                            <img class="icon5" src="{{MEDIA_URL}}images/folder.png"><span class="description">{{book.year}}</span>
+                            {% else %}
+                            <img class="icon5" src="{{MEDIA_URL}}images/folder.png"><span class="description">Не указано</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if userid != book.owner.id %}
+                <a href="{% url 'notification:notif-create' book.owner.id book.id %}">
+                <button class="button-add">
+                        <p class="button-p">Запросить книгу через сайт</p>
+                </button>
+                </a>
+                    {% endif %}
+                </div>
 
-{% if search_res %}
-{% for book in search_res %}
-{{ book.name }}
-{{ book.owner.username }}
-{% endfor %}
-{% endif %}
+            </div>
+        </section>
+
+        {% endfor %}
+                    </div>
+                {% else %}
+
+        <div class="main-content-search">
+            <div class="greeting-container">
+            <p class="greeting">Результат поиска
+                </p>
+
+                <p class="lets-try">Пока таких книжек<br>на буке нет :((
+                </p>
+            </div>
+        </div>
+
+                {% endif %}
+
+            {% endif %}
+
+        <div class="bottom-rectangle">
+            <a class="home-icon" href="{% url 'books:book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
+            <div class="search-with-point">
+                <div class="point-search"></div>
+                <a class="search-icon" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
+            </div>
+            <a class="mail-icon" href="{% url 'notification:received-notif-list' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
+            <a href="{% url 'books:wish-book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
+            <a href="{% url 'profile_app:books-profile' userid %}" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a>
+
+        </div>
+
+        </div>
+
+    </header>
+</body>
 
 {% endblock %}
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

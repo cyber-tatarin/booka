@@ -13,7 +13,8 @@ import re
 from users.models import Contacts
 
 
-class BookListView(View):
+class BookListView(LoginRequiredMixin, View):
+
     login_url = 'login'
     template_name = 'books/books.html'
 

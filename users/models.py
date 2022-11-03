@@ -11,6 +11,7 @@ class Cities(models.Model):
 
 
 class User(AbstractUser):
+
     email = models.EmailField(null=True, blank=False, unique=True)
     photo = ResizedImageField(size=[500, 500], crop=['middle', 'center'], quality=99,
                               blank=False, null=True, upload_to='images')
@@ -26,7 +27,3 @@ class Contacts(models.Model):
 
     def __str__(self):
         return self.contact
-
-
-
-

@@ -4,6 +4,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from .views import BookSearchView
 
+app_name = 'search_app'
+
 urlpatterns = [
 
     path('', BookSearchView.as_view(), name='search'),

@@ -1,26 +1,125 @@
-{% extends 'lh/base.html' %}
+<!DOCTYPE html>
 
+{% load static %}
 {% block content %}
 
-    <p></p>
-    <h1>Мои полученные уведомления</h1>
-    <hr>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400,700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styleb.css' %}">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="common-rectangle">
+                <div class="rectangle-main"></div>
+            </div>
+
+            {% if received %}
+        <div class="main-content-book">
+            <div class="get-post">
+                <div class="get-with-icon">
+                    <div class="point-get"></div>
+                    <div class="get"><a class="get-post-a" href="{% url 'notification:received-notif-list' %}">Полученные запросы</a></div>
+                </div>
+                <div class="post-with-icon">
+                    <div class="point-post point-post-hover"></div>
+                    <div class="post"><a class="get-post-a" href="{% url 'notification:sent-notif-list' %}">Отправленные запросы</a></div>
+                </div>
+            </div>
+            {% for notif, contact in received %}
+            <section>
+            <div class="book-container">
+                <div class="book-attributes">
+                    <p class="caption">{{notif.book.name}}</p>
+                    <p class="authors">
+                        {% for author in notif.book.authors.all %}
+                        — {{author.name}}
+                        {% endfor %}</p>
+                    <div class="info1-change">
+                        <img class="icon1" src="{{MEDIA_URL}}images/user.png">
+                        <span class="profile-name name-for-fonts">{{notif.sender.username}}</span>
+                    </div>
+                    {% if contact %}
+                    <div class="info3 info3-margin"><img class="icon3" src="{{MEDIA_URL}}images/smartphone.png">
+                        <span class="info3-fonts">{{contact.contact_type}}: {{contact.contact}}</span>
+                    </div>
+                    {% else %}
+                    <div class="info3 info3-margin"><img class="icon3" src="{{MEDIA_URL}}images/smartphone.png">
+                        <span class="info3-fonts">Не указано</span>
+                    </div>
+                    {% endif %}
+
+                    <span class="date">{{notif.time}}</span>
+                    <p class="comment comment-fonts">{{notif.message}}</p>
 
 
-        <ul class="list-group">
-            <li class="list-group-item">
-                <p>
-                    {% for i in received %}
-                    <span>{{i.sender.username}}</span> <br>
-                    <span>{{i.message}}</span> <br>
-                    <span>{{i.time}}</span> <br>
-                    <span>{{i.book}}</span><br>
-                    <br>
-                {% endfor %}
-                </p>
-            </li>
+
+                <a href="{% url 'notification:notif-create' notif.sender.id notif.book.id %}">
+                <button class="button-add">
+                        <p class="button-p">Ответить</p>
+                </button>
+                    </a>
+                    </div>
 
 
-    </ul>
+            </div>
+            </section>
+
+              {% endfor %}
+                    </div>
+
+                {% else %}
+            <div class="main-content-search">
+            <div class="get-post">
+                <div class="get-with-icon">
+                    <div class="point-get"></div>
+                    <div class="get"><a class="get-post-a" href="{% url 'notification:received-notif-list' %}">Полученные запросы</a></div>
+                </div>
+                <div class="post-with-icon">
+                    <div class="point-post point-post-hover"></div>
+                    <div class="post"><a class="get-post-a" href="{% url 'notification:sent-notif-list' %}">Отправленные запросы</a></div>
+                </div>
+            </div>
+                <div class="greeting-container-change">
+                <p class="lets-try-change">Пока Вам никто не прислал запрос ))</p>
+            </div>
+            </div>
+                {% endif %}
+
+
+        <div class="bottom-rectangle">
+
+            <a class="home-icon" href="{% url 'books:book-view' %}" ><img class="img-icons home-icon" src="{{MEDIA_URL}}images/home-page.png" ></a>
+            <a class="icon-search" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
+            <div class="mail-with-point">
+                <div class="point-mail "></div>
+                <a class="mail-icon" href="{% url 'notification:received-notif-list' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
+            </div>
+            <a href="{% url 'books:wish-book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
+            <a href="{% url 'profile_app:books-profile' userid %}" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a>
+
+        </div>
+        </div>
+        </div>
+    </header>
+</body>
+
+</html>
+
+
 
 {% endblock %}
