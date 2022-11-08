@@ -94,6 +94,14 @@ body {
     
 }
 
+.body-hidden {
+    overflow-y: hidden;
+    font-family: 'Montserrat', sans-serif;
+    height: 100%;
+    background-color: #FFAB91;
+    overflow-x: hidden;
+}
+
 .img-search{
     max-width: 22px;
     max-height: 22px;
@@ -190,6 +198,10 @@ form {
     padding: 0px 16px 0px 16px;
 }
 
+.test-button-short{
+    padding: 0px 20px 0px 20px;
+}
+
 .author-name{
     margin-bottom: 10px;
     font-style: normal;
@@ -209,7 +221,7 @@ form {
     padding-bottom:76px;
     margin: auto;
     width: 95%;
-    height: 670px;
+    height: 1100px;
     background: #FFFFFF;
     border-radius: 56px;
     
@@ -236,8 +248,8 @@ line-height: 15px;
     font-style: normal;
     margin-top: 40px;
     font-weight: 700;
-    font-size: 32px;
-    line-height: 39px;
+    font-size: 28px;
+    line-height: 32px;
     color: rgba(0, 0, 0, 0.4);;
 }
 
@@ -247,8 +259,8 @@ line-height: 15px;
     font-style: normal;
     margin-top: 20px;
     font-weight: 700;
-    font-size: 32px;
-    line-height: 39px;
+    font-size: 28px;
+    line-height: 32px;
     color: rgba(0, 0, 0, 0.4);;
 }
 
@@ -415,7 +427,7 @@ a:hover{
 }
 
 .lenta{
-    padding: 40px 0px 24px  40px; 
+    padding: 40px 0px 24px  40px;
     font-weight: 600;
     font-size: 12px;
     line-height: 15px;
@@ -501,9 +513,9 @@ justify-content: space-between;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 40px 24px 40px; 
+    padding: 30px 52px 24px 52px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 15px;
 }
 
@@ -565,7 +577,7 @@ justify-content: space-between;
     font-style: normal;
     font-weight: 800;
     font-size: 26px;
-    line-height: 24px;
+    line-height: 28px;
     margin-bottom: 12px;
 }
 

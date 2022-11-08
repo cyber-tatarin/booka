@@ -20,7 +20,11 @@
     <title>Document</title>
 </head>
 
+
 <body>
+{% if not search_req %}
+<script>document.querySelector('body').style.overflowY = "hidden";</script>
+{% endif %}
     <header class="header">
         <div class="container">
             <div class="common-rectangle">

@@ -175,7 +175,8 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
         return 'books/books_delete.html'
 
 
-class WishBookListView(View):
+class WishBookListView(LoginRequiredMixin, View):
+
     login_url = 'login'
     template_name = 'books/wish_books.html'
 
@@ -184,7 +185,7 @@ class WishBookListView(View):
 
         context = {
             'book_list': books,
-            'current_user': request.user,
+            'userid': request.user.id,
             'type': 2
         }
 

@@ -2,6 +2,7 @@
 
 {% load static %}
 {% block content %}
+{% load tz %}
 
 <html lang="en">
 
@@ -22,6 +23,7 @@
 </head>
 
 <body>
+
     <header class="header">
         <div class="container">
             <div class="common-rectangle">
@@ -63,9 +65,8 @@
                     </div>
                     {% endif %}
 
-                    <span class="date">{{notif.time}}</span>
+                    <span class="date">{{notif.time|timezone:"Europe/Moscow"}}</span>
                     <p class="comment comment-fonts">{{notif.message}}</p>
-
 
 
                 <a href="{% url 'notification:notif-create' notif.sender.id notif.book.id %}">

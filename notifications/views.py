@@ -65,10 +65,23 @@ class SentNotifList(LoginRequiredMixin, View):
 
     def get(self, request, **kwargs):
 
+        contact_list = []
         sent = Notifications.objects.all().filter(sender=request.user).order_by('-time')
+        sent_list = 0
+
+        if sent:
+            for notif in sent:
+                try:
+                    buf = Contacts.objects.filter(userid=notif.receiver)[0]
+                except:
+                    buf = 0
+                contact_list.append(buf)
+
+            sent_list = zip(sent, contact_list)
 
         context = {
-            'sent': sent
+            'sent': sent_list,
+            'userid': request.user.id
         }
 
         return render(request, self.template_name, context)
@@ -89,7 +102,7 @@ class ReceivedNotifList(LoginRequiredMixin, View):
         if received:
             for notif in received:
                 try:
-                    buf = Contacts.objects.filter(userid=notif.book.owner)[0]
+                    buf = Contacts.objects.filter(userid=notif.sender)[0]
                 except:
                     buf = 0
                 contact_list.append(buf)
