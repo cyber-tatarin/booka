@@ -1,19 +1,89 @@
-{% extends 'lh/base.html' %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
+{% load static %}
 {% block content %}
-    <h1>Войти</h1>
-    <hr>
 
-    {% if form.errors %}
-        <p>{{ form.errors.error }}</p>
-    {% endif %}
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400,700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/styleb.css' %}">
+        <title>Document</title>
+    </head>
 
-    <form method="post">
-        {{form}}
-    {% csrf_token %}
+    <body>
+        <header class="header">
+            <div class="container">
+                <div class="common-rectangle">
+                    <div class="rectangle-main"></div>
+                </div>
 
-        <p></p>
-    <button type="submit" class="btn btn-success">Войти</button>
-    </form>
-    <a href="{% url 'password_reset' %}">Забыли пароль?</a>
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                <div class="main-content-options">
+                    <p class="lenta">Логин</p>
+
+                    <section>
+                        <div class="book-container">
+                            <div class="book-attributes-change">
+                                <p class="caption">Никнейм</p>
+                                    <div class="add-book-name">
+                                    {{form.username}}
+                                    </div>
+                                {% if form.username.errors %}
+                                {{ form.username.errors }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="book-container">
+                            <div class="book-attributes-change">
+                                <p class="caption">Пароль</p>
+                                    <div class="add-book-name">
+                                    {{form.password}}
+                                    </div>
+                                {% if form.password.errors %}
+                                {{ form.password.errors }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+                    <div class="last-button">
+                    <button class="last-button-add" type="submit" id="upload">
+
+                        <p class="button-p">Войти</p>
+
+                    </button>
+                </div>
+
+       </form>
+
+                {% if form.errors %}
+                <p>Неправильный логин или пароль</p>
+                {% endif %}
+
+        <a href="{% url 'password_reset' %}">Забыли пароль?</a>
+
+            </div>
+        </header>
+     </body>
+
+</html>
+
 {% endblock %}
+

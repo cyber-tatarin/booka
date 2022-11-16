@@ -1,25 +1,189 @@
-{% block title %}{% endblock %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
+{% load static %}
 {% block content %}
-    <div class="features">
+{% load widget_tweaks %}
 
-    {% if form.errors %}
-        <p>{{ form.errors.error }}</p>
-    {% endif %}
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400,700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/styleb.css' %}">
+        <title>Document</title>
+    </head>
 
-        <h1> Форма добавления книги </h1>
-        <form method="POST"  enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="hidden" name="book_type" value="
-{% if type == 2%}
-{{2}}
-{% endif %}
-"
-            >
-                {{form}}
+    <body>
+        <header class="header">
+            <div class="container">
+                <div class="common-rectangle">
+                    <div class="rectangle-main"></div>
+                </div>
 
-            <button class="btn btn-success" type="submit">Добавить!</button>
-            <a href="{% url 'books:book-view'%}" >Отмена</a>
-        </form>
-    </div>
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% if type == 1 %}
+                <div class="main-content-options">
+                    <p class="lenta">Добавление книги</p>
+                    {% else %}
+                <div class="main-content-options">
+                    <p class="lenta">Добавление книги в виш-лист</p>
+                    {% endif %}
+
+                    <section>
+                        <div class="book-container">
+                            <div class="book-attributes-change">
+                                <p class="caption">Название</p>
+                                    <div class="add-book-name">
+                                    {{form.name}}
+                                    </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="book-container">
+                            <div class="book-attributes-change">
+                                <p class="caption">Авторы</p>
+                                <div class="add-book-name">
+                                    {{form.authors}}
+                                </div>
+                                <p class="comment-for-authors">Вводите автора внимательно, чтобы люди смогли найти Вашу книжку, забив автора в поиск!
+                                   <br>
+                                    <br>Если авторов несколько, введите всех через запятую</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {% if type == 1 %}
+                    <section>
+                        <div class="book-container">
+                            <div class="book-attributes-change">
+                                <p class="caption">Фото</p>
+                                <div class="file-form">
+                                    <div class="choose-file-container">
+                                        <label class="choose-file-button" id="test">
+                                            {{form.image|attr:'required:true'}}
+                                            <span class="button-file">CHOOSE FILE</span></label>
+                                    </div>
+                                </div>
+                                <p class="comment-for-photo">Сфотографирайте книгу так, чтобы она была в центре. Все фото обрезаются под квадрат, будьте внимательны, чтобы фто Вашей книги выглядело хорошо
+                            <br>
+                            <br>ФОТО ЗАГРУЗИТЬ ОБЯЗАТЕЛЬНО</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="book-container">
+                            <div class="book-attributes-change">
+                                <p class="caption">Описание</p>
+                                <div class="add-book-description">
+                                    {{form.description}}
+                                </div>
+                                <p class="comment-for-authors">Здесь Вы можете написать свое мнение о книге. Для кого она может быть интересна, а для кого — нет.
+                                    <br>
+                                    <br>Так же здесь Вы можете написать условия обмена книги или свои пожелания к обмену</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="book-container">
+                            <div class="book-attributes-change">
+                                <p class="caption">Язык</p>
+                                <div class="add-book-name">
+                                    {{form.language}}
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                    <section>
+                        <div class="book-container">
+                            <div class="book-attributes-change">
+                                <p class="caption">Год издания</p>
+                                <div class="add-book-name">
+                                    {{form.year}}
+                                    </div>
+                            </div>
+                        </div>
+                    </section>
+                    {% endif %}
+                </div>
+
+
+                <div class="last-button">
+                    <button class="last-button-add" type="submit" id="upload">
+                        {% if type == 1 %}
+                        <p class="button-p">Добавить книгу</p>
+                        {% else %}
+                        <p class="button-p">Добавить книгу в виш-лист</p>
+                        {% endif %}
+                    </button>
+                </div>
+
+       </form>
+
+                 <div class="bottom-rectangle">
+
+
+            <a class="home-icon" href="{% url 'books:book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
+            <a class="search-icon" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
+            <a class="mail-icon" href="{% url 'notification:received-notif-list' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
+            <a href="{% url 'books:wish-book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
+            <div class="user-with-point">
+                <div class="point-user "> </div>
+            <a href="{% url 'profile_app:books-profile' userid %}" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a></div>
+
+        </div>
+            </div>
+        </header>
+        <script>
+
+// filter: blur(10px);
+
+
+            let inputs = document.querySelectorAll('.file-input');
+            Array.prototype.forEach.call(inputs, function(input) {
+                input.addEventListener('change', function(e) {
+                    test.style.transitionProperty = 'background-color';
+                    test.style.transitionDuration = "0.3s";
+                    // let counter = 5;
+                    // document.querySelector('.button-file').innerText = 'ЗАГРУЗКА...';
+                    // let timer = setInterval(function() {
+                    //     // let timePassed = Date.now() - start;
+                    //     test.style.marginLeft = counter + 'px';
+                    //     if (counter >= document.getElementById('choose-file-container').offsetWidth) {
+                    //         clearInterval(timer);
+                            test.style.float = 'right';
+                            document.querySelector('.choose-file-button').style.backgroundColor = '#FFAB91';
+                            document.querySelector('.button-file').innerText = 'ЗАГРУЖЕНО';
+                            document.querySelector('.button-file').style.color = "#ffffff";
+                            // document.querySelector('body').style.overflowY = "hidden";
+                    //     }
+                    //     counter *= 1.2;
+                    // }, 30);
+                    //   document.querySelector('.button-file').innerText = 'ЗАГРУЖЕНО'; 
+                    //   document.querySelector('.button-file').style.color = "#ffffff";
+                    //   document.querySelector('.choose-file-button').style.float = 'right';
+                    document.querySelector('.choose-file-button').style.border = '0px solid #000000';
+                    document.querySelector('.choose-file-button').style.boxShadow = '-0.5px 0px 0px 2px rgb(0 0 0)';
+                });
+            });
+        </script>
+
+    </body>
+
+</html>
+
 {% endblock %}

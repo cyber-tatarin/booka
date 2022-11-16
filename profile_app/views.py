@@ -14,13 +14,14 @@ from django.contrib.auth.views import PasswordChangeView
 User = get_user_model()
 
 
-class ProfileBooksView(View):
+class ProfileBooksView(LoginRequiredMixin, View):
+
+    login_url = 'login'
     template_name = 'profile_app/profilebooks_templ.html'
 
     def get(self, request, **kwargs):
         s_user = get_object_or_404(User, id=kwargs['pk'])
         books = BookModel.objects.all().filter(owner=s_user, book_type=1)
-        print(books)
         context = {
             'searched_user': s_user,
             'check_id': request.user.id,
@@ -29,7 +30,9 @@ class ProfileBooksView(View):
         return render(request, self.template_name, context)
 
 
-class ProfileWishView(View):
+class ProfileWishView(LoginRequiredMixin, View):
+
+    login_url = 'login'
     template_name = 'profile_app/profilewish_templ.html'
 
     def get(self, request, **kwargs):
@@ -44,7 +47,9 @@ class ProfileWishView(View):
         return render(request, self.template_name, context)
 
 
-class ProfileContactsView(View):
+class ProfileContactsView(LoginRequiredMixin, View):
+
+    login_url = 'login'
     template_name = 'profile_app/profilecontacts_templ.html'
 
     def get(self, request, **kwargs):
@@ -79,7 +84,8 @@ class ProfileUpdateView(LoginRequiredMixin, View):
                                               })
 
         context = {'form': form,
-                   'photo': curr_user.photo}
+                   'photo': curr_user.photo,
+                   'userid': request.user.id}
 
         return render(request, self.template_name, context)
 
@@ -115,6 +121,12 @@ class ProfileUpdateView(LoginRequiredMixin, View):
 class SettingsView(LoginRequiredMixin, TemplateView):
     login_url = 'login'
     template_name = 'profile_app/settings.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = {
+            'userid': self.request.user.id
+        }
+        return ctx
 
 
 class ContactCreateView(LoginRequiredMixin, View):
@@ -154,7 +166,8 @@ class ContactListView(LoginRequiredMixin, View):
     def get(self, request, **kwargs):
         queryset = Contacts.objects.all().filter(userid=request.user.id)
         context = {
-            'contact_list': queryset
+            'contacts': queryset,
+            'userid': request.user.id
         }
 
         return render(request, self.template_name, context)
@@ -215,14 +228,10 @@ class ContactUpdateView(LoginRequiredMixin, View):
 
 
 class UserPasswordChangeView(PasswordChangeView):
+
     form_class = UserPasswordChangeForm
     template_name = 'profile_app/password_change.html'
     success_message = 'Ваш пароль был успешно изменён!'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Изменение пароля на сайте'
-        return context
 
     def get_success_url(self):
         return reverse('profile_app:password-change-done')
@@ -239,4 +248,7 @@ class TechnicalSupportView(View):
     template_name = 'profile_app/technical_support.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        context = {
+            'userid': request.user.id
+        }
+        return render(request, self.template_name, context)

@@ -49,7 +49,8 @@ class BookCreateView(LoginRequiredMixin, View):
 
         context = {
             'form': form,
-            'type': kwargs['type']
+            'type': kwargs['type'],
+            'userid': request.user.id
         }
 
         return render(request, self.template_name, context)
@@ -80,9 +81,11 @@ class BookCreateView(LoginRequiredMixin, View):
             for author in upper_author_list:
                 buf = AuthorModel.objects.get_or_create(name=author)
                 book.authors.add(buf[0])
-                print(book.authors)
 
-            return redirect('books:book-view')
+            if book.book_type == 1:
+                return redirect('books:book-view')
+            else:
+                return redirect('books:wish-book-view')
 
         context = {
             'form': form
@@ -116,7 +119,9 @@ class BookUpdateView(LoginRequiredMixin, View):
         })
 
         context = {
-            'form': form
+            'form': form,
+            'userid': request.user.id,
+            'title': book.name
         }
         return render(request, self.template_name, context)
 

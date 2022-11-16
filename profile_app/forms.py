@@ -5,33 +5,33 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model, password_validation
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 class ProfileUpdateForm(forms.Form):
     username = forms.CharField(max_length=100, required=True,
-                               widget=forms.TextInput(attrs={'class': 'form-control',
-                                                             'id': "username",
-                                                             'aria-describedby': "username-help"}))
+                               widget=forms.TextInput(attrs={'class': 'input-book',
+                                                             'placeholder': 'Введите никнейм'}))
 
     photo = forms.ImageField(required=False,
-                             widget=forms.FileInput(attrs={'class': 'form-control',
-                                                           'id': 'photo'}))
+                             widget=forms.FileInput(attrs={'class': 'file-input',
+                                                           'name': "file",
+                                                           'id': "choose-file-container", }))
 
     bio = forms.CharField(max_length=199, required=False,
-                          widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'id': "bio",
-                                                        'aria-describedby': "bio-help"}))
+                          widget=forms.Textarea(attrs={'class': 'input-book-description-textarea',
+                                                        'placeholder': 'Введите описание профиля'}))
 
     city = forms.CharField(max_length=40, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'id': "city",
-                                                         'aria-describedby': "city-help"}))
+                           widget=forms.TextInput(attrs={'class': 'input-book',
+                                                         'placeholder': 'Введите свой город'}))
 
     def clean_username(self):
         username = self.cleaned_data['username']
 
         if re.search(r'[^a-z_.1234567890-]', username):
-            raise forms.ValidationError("Никнейм может состоять только из латинских букв нижнего регистра, цифр и _/-/. ")
+            raise forms.ValidationError(
+                "Никнейм может состоять только из латинских букв нижнего регистра, цифр и _/-/. ")
 
         return username
 
@@ -56,23 +56,34 @@ class ContactCreateForm(forms.Form):
                                                             'aria-describedby': "city-help"}))
 
     contact_type = forms.CharField(widget=forms.RadioSelect(choices=CHOICES, attrs={'class': 'form-control',
-                                                                                   'id': "contactType",
-                                                                                   'aria-describedby': "city-help"}))
+                                                                                    'id': "contactType",
+                                                                                    'aria-describedby': "city-help"}))
 
     description = forms.CharField(max_length=100, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'id': "description",
                                                                 'aria-describedby': "city-help"}))
 
-class UserPasswordChangeForm(forms.Form):
 
-    error_messages = {
-        "password_mismatch": _("The two password fields didn’t match."),
-    }
+class UserPasswordChangeForm(PasswordChangeForm):
+
+    old_password = forms.CharField(
+        label=_("Old password"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={"autocomplete": "current-password", "autofocus": True,
+                   'class': 'input-book',
+                   'placeholder': 'Введите свой старый пароль'
+                   }
+        ),
+    )
 
     new_password1 = forms.CharField(
         label=_("New password"),
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
+                                          'class': 'input-book',
+                                          'placeholder': 'Введите новый пароль'
+                                          }),
         strip=False,
         help_text=password_validation.password_validators_help_text_html(),
     )
@@ -80,33 +91,8 @@ class UserPasswordChangeForm(forms.Form):
     new_password2 = forms.CharField(
         label=_("New password confirmation"),
         strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
+                                          'class': 'input-book',
+                                          'placeholder': 'Повторите новый пароль'
+                                          }),
     )
-
-    def clean_new_password2(self):
-        password1 = self.cleaned_data.get("new_password1")
-        password2 = self.cleaned_data.get("new_password2")
-        if password1 and password2:
-            if password1 != password2:
-                raise ValidationError(
-                    self.error_messages["password_mismatch"],
-                    code="password_mismatch",
-                )
-        password_validation.validate_password(password2, self.user)
-        return password2
-
-    def save(self, commit=True):
-        password = self.cleaned_data["new_password1"]
-        self.user.set_password(password)
-        if commit:
-            self.user.save()
-        return self.user
-
-    def __init__(self, user, *args, **kwargs):
-        self.user = user
-        super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control',
-                'autocomplete': 'off'
-            })

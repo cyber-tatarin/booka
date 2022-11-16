@@ -58,7 +58,7 @@
             {% for book, contact in book_list %}
        <section>
             <div class="book-container">
-                <div class="book-attributes">
+                <div class="book-attributes-change">
                     <p class="caption">{{book.name}}</p>
                     <p class="authors">
                         {% for author in book.authors.all %}
@@ -122,7 +122,7 @@
                 </p>
             </div>
         </div>
-
+            <script>document.querySelector('body').style.overflowY = "hidden";</script>
                 {% endif %}
 
             {% endif %}

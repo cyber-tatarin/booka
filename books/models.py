@@ -14,9 +14,9 @@ class BookModel(models.Model):
     image = ResizedImageField(size=[500, 500], crop=['middle', 'center'], quality=99,
                               blank=True, null=True, upload_to='images/')
     name = models.CharField(max_length=100)
-    year = models.IntegerField(default=0)
-    language = models.CharField(max_length=100)
-    description = models.CharField(max_length=600)
+    year = models.IntegerField(null=True)
+    language = models.CharField(max_length=100, null=True)
+    description = models.CharField(max_length=600, null=True)
     book_type = models.IntegerField(default=1)
     authors = models.ManyToManyField(AuthorModel, related_name='authrs')
 

@@ -29,7 +29,9 @@ class NotifCreateView(LoginRequiredMixin, View):
 
         context = {
             'form': form,
-            'receiver': receiver
+            'receiver': receiver,
+            'book': book,
+            'userid': request.user.id
         }
 
         return render(request, self.template_name, context)
@@ -45,7 +47,6 @@ class NotifCreateView(LoginRequiredMixin, View):
             notif = Notifications(message=data['message'],
                                   sender=request.user,
                                   receiver=receiver,
-                                  ntype=request.POST['ntype'],
                                   book=book)
             notif.save()
 

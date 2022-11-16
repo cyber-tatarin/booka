@@ -33,7 +33,7 @@
     {% for book, contact in book_list %}
         <section>
             <div class="book-container">
-                <div class="book-attributes">
+                <div class="book-attributes-change">
                     <p class="caption">{{book.name}}</p>
                     <p class="authors">
                         {% for author in book.authors.all %}
@@ -105,6 +105,17 @@
 
         </div>
     </header>
+<script>
+
+        let countOfSections = document.querySelectorAll('.section');
+
+        if (countOfSections.length == 0 || countOfSections.length == 1) {
+
+           document.querySelector('.main-options-container').style.height = "1000px";
+           document.querySelector('body').style.overflowY = "hidden";
+       }
+
+    </script>
 </body>
 </html>
 

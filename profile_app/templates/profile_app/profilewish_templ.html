@@ -1,30 +1,178 @@
-{% extends 'lh/base.html' %}
+<!DOCTYPE html>
 
+{% load static %}
 {% block content %}
-    <h1>Профиль</h1>
-    <hr>
-{% if searched_user.photo %}
-<img src="{{searched_user.photo.url}}" width="150px">
-{% endif %}
-{{searched_user.username}}
-{{searched_user.email}}
-{% if searched_user.id == check_id %}
-           <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile_app:settings' %}">Настройки</a>
-                </li>
-{% endif %}
-<br>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400,700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styleb.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="common-rectangle">
+                <div class="rectangle-main"></div>
+            </div>
+
+            <div class="profile-info">
+                <div class="profile-info-container">
+                <div class="profile-info-inner">
+
+                        {% if searched_user.photo %}
+                        <img class="profile-image" src="{{MEDIA_URL}}{{searched_user.photo}}">
+                        {% endif %}
+
+                    <div class="profile-inner-content">
+                        <p class="author-name">{{searched_user.username}}</p>
+                        <div class="icon-adress">
+                            <div class="info2-profile">
+                                <img class="icon2" src="{{MEDIA_URL}}images/placeholder.png"><span class="description">{% if searched_user.city %}
+                                {{searched_user.city}} {% else %} Не указано {% endif %}</span>
+                            </div>
+                            {% if searched_user.bio %}
+                            <p class="book-description">{{searched_user.bio}}</p>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+                {% if searched_user.id == check_id %}
+                <a href="{% url 'profile_app:settings' %}">
+            <button class="add-to-wishlist options-button">
+                <p class="button-p">Настройки</p>
+            </button>
+                </a>
+                {% endif %}
+            </div>
 
 
-{% for book in books %}
-{{ book.name }}
-{% if searched_user.id == check_id %}
-        <a href="{% url 'books:book-update' book.id %}" >Изменить</a> | <a href="{% url 'books:book-delete' book.id %}" >Удалить</a><br>
-{% else %}
-<a href="{% url 'notification:notif-create' searched_user.id book.id %}"> Запросить книгу </a>
-{% endif %}
-<br>
-<br>
-{% endfor %}
+        <div class="main-content-book">
+        <div class="nav-bar">
+            <div class="book-with-point">
+                <div class="point-book point-book-hide"> </div>
+                <a class="book-icon" href="{% url 'profile_app:books-profile' searched_user.id %}" ><p class=" nav-content">Книги</p></a>
+            </div>
+
+            <div class="contacts-with-point">
+                <div class="point-contacts point-contacts-hide"> </div>
+                <a class="contacts-icon " href="{% url 'profile_app:contacts-profile' searched_user.id %}" ><p class=" nav-content">Контакты</p></a>
+            </div>
+
+            <div class="list-with-point">
+                <div class="point-list"> </div>
+                <a class="list-icon" href="{% url 'profile_app:wish-profile' searched_user.id %}" ><p class=" nav-content">Виш-лист</p></a>
+            </div>
+        </div>
+             {% if searched_user.id == check_id %}
+
+        <div class="test-button-short">
+            <a href="{% url 'books:book-create' 2 %}">
+            <button class="add-to-wishlist">
+                <p class="button-p">Добавить книгу в виш-лист</p>
+            </button>
+            </a>
+        </div>
+            {% endif %}
+
+            {% if books %}
+            {% for book in books %}
+        <section>
+            <div class="book-container">
+                <div class="book-attributes-change">
+                    <p class="caption">{{book.name}}</p>
+                    <p class="authors">
+                        {% for author in book.authors.all %}
+                        — {{author.name}}
+                        {% endfor %}
+                    </p>
+                    {% if searched_user.id == check_id %}
+                    <div class="two-buttons">
+
+                    <button class="button-add" onclick="window.location.href = '{% url 'books:book-delete' book.id %}'">
+                        <p class="button-p">Удалить</p>
+                    </button>
+
+                    </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </section>
+            {% endfor %}
+            {% endif %}
+
+        </div>
+        <div class="bottom-rectangle">
+
+
+            <a class="home-icon" href="{% url 'books:book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
+            <a class="search-icon" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
+            <a class="mail-icon" href="{% url 'notification:received-notif-list' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
+            <a href="{% url 'books:wish-book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
+            <div class="user-with-point">
+                <div class="point-user "> </div>
+            <a href="{% url 'profile_app:books-profile' check_id %}" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a></div>
+
+        </div>
+
+        </div>
+    </header>
+    <script>
+
+        let countOfSections = document.querySelectorAll('section');
+
+        if (countOfSections.length == 0) {
+
+            document.querySelector('.main-content-book').style.height = "1000px";
+            document.querySelector('body').style.overflowY = "hidden";
+        }
+
+    </script>
+</body>
+
+</html>
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

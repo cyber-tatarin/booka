@@ -13,24 +13,22 @@ class UserCreateForm(UserCreationForm):
                                              'invalid': 'raaaa'},
                              widget=forms.EmailInput({
                                  'required': True,
-                                 'class': 'form-control',
-                                 'placeholder': 'E-mail address',
+                                 'class': 'input-book',
+                                 'placeholder': 'Введите email'
                              }))
 
-    username = forms.CharField(max_length=20, required=True,
-                               widget=forms.TextInput(attrs={'class': 'form-control',
-                                                             'id': "username",
-                                                             'aria-describedby': "username-help"}))
+    username = forms.CharField(max_length=15, required=True,
+                               widget=forms.TextInput(attrs={'class': 'input-book',
+                                                             'placeholder': 'Введите никнейм',
+                                                             }))
 
     password1 = forms.CharField(max_length=100, required=True,
-                                widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                                                  'id': "username",
-                                                                  'aria-describedby': "username-help"}))
+                                widget=forms.PasswordInput(attrs={'class': 'input-book',
+                                                                  'placeholder': 'Введите пароль'}))
 
     password2 = forms.CharField(max_length=100, required=True,
-                                widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                                                  'id': "username",
-                                                                  'aria-describedby': "username-help"}))
+                                widget=forms.PasswordInput(attrs={'class': 'input-book',
+                                                                  'placeholder': 'Повторите пароль'}))
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -51,11 +49,9 @@ class UserLoginForm(AuthenticationForm):
         super().__init__(*args, **kwargs)
 
     username = forms.CharField(max_length=20, required=True,
-                               widget=forms.TextInput(attrs={'class': 'form-control',
-                                                             'id': "username",
-                                                             'aria-describedby': "username-help"}))
+                               widget=forms.TextInput(attrs={'class': 'input-book',
+                                                             'placeholder': 'Введите никнейм'}))
 
     password = forms.CharField(max_length=100, required=True,
-                               widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                                                 'id': "username",
-                                                                 'aria-describedby': "username-help"}))
+                               widget=forms.PasswordInput(attrs={'class': 'input-book',
+                                                             'placeholder': 'Введите пароль'}))

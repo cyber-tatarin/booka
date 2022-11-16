@@ -1,32 +1,100 @@
-{% extends 'lh/base.html' %}
+<!DOCTYPE html>
 
+{% load static %}
 {% block content %}
 
-    <h1>Добавить вещь</h1>
-    <hr>
+<html lang="en">
 
-    {% if form.errors %}
-        <p>{{ form.errors.error }}</p>
-    {% endif %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400,700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styleb.css' %}">
+    <title>Document</title>
+</head>
 
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="common-rectangle">
+                <div class="rectangle-main"></div>
+            </div>
 
-    <p> Сообщение для {{ receiver.username }}
+<form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
 
-    <form method="post" enctype="multipart/form-data">
+        <div class="main-content-options">
+            <p class="lenta">Запрос через сайт</p>
 
-        <div class="mb-3"  align="left">
-            <label for="thing-title" class="form-label">Название</label>
-            {{ form.message }}
-            <div id="titleHelp" class="form-text">Например: Красная кофта ZARA</div>
+            <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+
+                        <p class="isbook">Книга</p>
+
+                        <p class="caption">{{book.name}}</p>
+
+                    </div>
+
+                </div>
+            </section>
+            <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+
+                        <p class="isbook">Получатель</p>
+
+                        <a href="{% url 'profile_app:books-profile' receiver.id%}" style="text-decoration:none; color: #000000;">
+                        <p class="book-author">{{receiver.username}}</p>
+                       </a>
+
+                    </div>
+
+                </div>
+            </section>
+            <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="caption">Сообщение</p>
+                        <div class="add-book-description">
+                            {{form.message}}
+                        </div>
+                        <p class="comment-for-authors">Напишите, что Вы предлагаете взамен и как владельцу книги связаться с Вами :))</p>
+                    </div>
+                </div>
+            </section>
         </div>
 
-        <input type="hidden" value="2" name="ntype">
+        <div class="last-button">
+            <button class="last-button-add" type="submit">
+                <p class="button-p" >Отправить</p>
+            </button>
+        </div>
 
-         <button type="submit" class="btn btn-success">Добавить</button>
-
-        {% csrf_token %}
-            </form>
+       </form>
 
 
+        <div class="bottom-rectangle">
+
+            <a class="home-icon" href="{% url 'books:book-view' %}" ><img class="img-icons home-icon" src="{{MEDIA_URL}}images/home-page.png" ></a>
+            <a class="icon-search" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
+            <div class="mail-with-point">
+                <div class="point-mail "></div>
+                <a class="mail-icon" href="{% url 'notification:received-notif-list' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
+            </div>
+            <a href="{% url 'books:wish-book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
+            <a href="{% url 'profile_app:books-profile' userid %}" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a>
+
+        </div>
+
+        </div>
+    </header>
 
 {% endblock %}

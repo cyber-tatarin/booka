@@ -28,7 +28,7 @@ class RegisterView(View):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('home')
+            return redirect('books:book-view')
 
         context = {
             'form': form
@@ -52,7 +52,7 @@ class LoginView(View):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('home')
+            return redirect('books:book-view')
 
         context = {
             'form': form

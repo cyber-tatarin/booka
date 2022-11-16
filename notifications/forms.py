@@ -2,9 +2,8 @@ from django import forms
 
 
 class NotifCreateForm(forms.Form):
-    message = forms.CharField(max_length=349,
+    message = forms.CharField(required=True, max_length=349,
                               widget=forms.Textarea(attrs={
-                                  'class': 'form-control',
-                                  'id': "message",
-                                  'aria-describedby': "username-help"}
+                                  'class': 'input-book-description-textarea',
+                                  'placeholder': "Введите сообщение"}
                               ))
