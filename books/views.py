@@ -88,7 +88,8 @@ class BookCreateView(LoginRequiredMixin, View):
                 return redirect('books:wish-book-view')
 
         context = {
-            'form': form
+            'form': form,
+            'userid': request.user.id
         }
 
         return render(request, self.template_name, context)
@@ -157,7 +158,8 @@ class BookUpdateView(LoginRequiredMixin, View):
                 return redirect('books:wish-book-view')
 
         context = {
-            'form': form
+            'form': form,
+            'userid': request.user.id
         }
 
         return render(request, self.template_name, context)

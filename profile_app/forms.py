@@ -26,6 +26,15 @@ class ProfileUpdateForm(forms.Form):
                            widget=forms.TextInput(attrs={'class': 'input-book',
                                                          'placeholder': 'Введите свой город'}))
 
+    def clean_bio(self):
+        bio = self.cleaned_data['bio']
+
+        if re.search(r'[^а-яА-Яa-zA-Z-,.()%$#@!&*?+=/;:"0123456789 ]', bio):
+            raise forms.ValidationError(
+                "Описание может состоять из букв русского и английского алфавита, цифр, символов -,.()%$#@!&*?+=/;:")
+
+        return bio
+
     def clean_username(self):
         username = self.cleaned_data['username']
 
@@ -38,8 +47,8 @@ class ProfileUpdateForm(forms.Form):
     def clean_city(self):
         city = self.cleaned_data['city']
 
-        if re.search(r'[^а-яА-я-]', city):
-            raise forms.ValidationError("Название города может состоять только из букв и -")
+        if re.search(r'[^а-яА-Яa-zA-Z-]', city):
+            raise forms.ValidationError("Название города может состоять только из букв русского и английского алфавита и -")
 
         return city
 
@@ -50,7 +59,7 @@ CHOICES = [('Instagram', 'Instagram'),
 
 
 class ContactCreateForm(forms.Form):
-    contact = forms.CharField(max_length=100, required=False,
+    contact = forms.CharField(max_length=100, required=True,
                               widget=forms.TextInput(attrs={'class': 'form-control',
                                                             'id': "contact",
                                                             'aria-describedby': "city-help"}))
@@ -63,6 +72,24 @@ class ContactCreateForm(forms.Form):
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'id': "description",
                                                                 'aria-describedby': "city-help"}))
+
+    def clean_contact(self):
+        contact = self.cleaned_data['contact']
+
+        if re.search(r'[^а-яА-Яa-zA-Z-,.()#@+/:0123456789 ]', contact):
+            raise forms.ValidationError(
+                "Контакт может состоять из букв русского и английского алфавита, цифр, символов -,.()#@+/:")
+
+        return contact
+
+    def clean_description(self):
+        description = self.cleaned_data['description']
+
+        if re.search(r'[^а-яА-Яa-zA-Z-,.()%$#@!&*?+=/;:"0123456789 ]', description):
+            raise forms.ValidationError(
+                "Описание может состоять из букв русского и английского алфавита, цифр, символов -,.()%$#@!&*?+=/;:")
+
+        return description
 
 
 class UserPasswordChangeForm(PasswordChangeForm):
