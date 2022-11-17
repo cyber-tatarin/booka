@@ -7,37 +7,36 @@ import datetime
 
 
 class BookCreateForm(forms.Form):
-
     authors = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={
-                'id': 'authors_field',
-                'class': 'input-book',
-                'placeholder': 'Введите название авторов через запятую'
-            }))
+        'id': 'authors_field',
+        'class': 'input-book',
+        'placeholder': 'Введите название авторов через запятую'
+    }))
     name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={
-                'class': 'input-book',
-                'placeholder': 'Введите название книги'
-            }))
+        'class': 'input-book',
+        'placeholder': 'Введите название книги'
+    }))
     year = forms.IntegerField(max_value=datetime.datetime.now().year, required=False, widget=forms.NumberInput(attrs={
-                'class': 'input-book',
-                'placeholder': 'Введите год издания книги'
-            }))
+        'class': 'input-book',
+        'placeholder': 'Введите год издания книги'
+    }))
     language = forms.CharField(max_length=30, required=False, widget=forms.TextInput(attrs={
-                'class': 'input-book',
-                'placeholder': 'Введите язык книги'
-            }))
+        'class': 'input-book',
+        'placeholder': 'Введите язык книги'
+    }))
     description = forms.CharField(max_length=400, required=False, widget=forms.Textarea(attrs={
-                'class': 'input-book-description-textarea',
-                'placeholder': 'Введите описание книги'
-            }))
+        'class': 'input-book-description-textarea',
+        'placeholder': 'Введите описание книги'
+    }))
 
     image = forms.ImageField(required=False, widget=forms.FileInput(attrs={
-                'class': 'file-input',
-                'placeholder': 'Описание...',
-                'name': "file",
-                'id': "choose-file-container",
-                'oninvalid': "this.setCustomValidity('Enter User Name Here')",
-                'oninput': "this.setCustomValidity('')"
-            }))
+        'class': 'file-input',
+        'placeholder': 'Описание...',
+        'name': "file",
+        'id': "choose-file-container",
+        'oninvalid': "this.setCustomValidity('Enter User Name Here')",
+        'oninput': "this.setCustomValidity('')"
+    }))
 
     def clean_authors(self):
         authors = self.cleaned_data['authors']
@@ -77,18 +76,15 @@ class BookCreateForm(forms.Form):
 
     def clean_year(self):
         year = self.cleaned_data['year']
-        if year == '':
-            year = 0
-            return year
-        year_int = int(year)
-        cur_year = datetime.datetime.now().year
-        if re.search(r'\d\d\d\d\d', year):
-            raise forms.ValidationError(
-                "Год может состоять только из цифр (максимум 4 цифры)!")
 
-        if year_int > cur_year or year_int < 0:
-            raise forms.ValidationError(
-                "Год не может быть больше текущего и меньше 0")
+        if year:
+            cur_year = datetime.datetime.now().year
+            if re.search(r'\d\d\d\d\d', str(year)):
+                raise forms.ValidationError(
+                    "Год может состоять только из цифр (максимум 4 цифры)!")
+
+            if year > cur_year or year <= 0:
+                raise forms.ValidationError(
+                    "Год не может быть больше текущего и меньше 0")
 
         return year
-
