@@ -24,10 +24,12 @@
 
 <body>
 
-    <header class="header">
+<header class="header">
         <div class="container">
             <div class="common-rectangle">
-                <div class="rectangle-main"></div>
+                <div class="rectangle-main">
+                    <span class="booka-span-first booka-span1">BOOKA</span>
+                </div>
             </div>
 
             {% if sent %}
@@ -70,7 +72,7 @@
 
 
 
-                <a href="{% url 'notification:notif-create' notif.receiver.id notif.book.id %}">
+                <a href="{% url 'notification:notif-create' notif.receiver.id notif.book.id %}?next={{ request.path|urlencode }}">
                 <button class="button-add">
                         <p class="button-p">Отправить еще сообщение</p>
                 </button>
@@ -121,7 +123,7 @@
 
 <script>
 
-     let countOfSections = document.querySelectorAll('.section');
+     let countOfSections = document.querySelectorAll('section');
 
         if (countOfSections.length == 0 ) {
             document.querySelector('.main-content-search').style.height = "1000px";

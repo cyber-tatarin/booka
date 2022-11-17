@@ -10,6 +10,7 @@ from users.models import Cities, Contacts
 from books.models import BookModel
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.views import PasswordChangeView
+from django.http import HttpResponseRedirect
 
 User = get_user_model()
 
@@ -150,7 +151,12 @@ class ContactCreateView(LoginRequiredMixin, View):
             contact = Contacts(**data)
             contact.userid = request.user
             contact.save()
-            return redirect('profile_app:settings')
+
+            try:
+                next = self.request.POST.get('next')
+                return HttpResponseRedirect(next)
+            except:
+                return redirect('profile_app:profilecontacts_templ')
 
         context = {
             'form': form
@@ -181,7 +187,11 @@ class ContactDeleteView(LoginRequiredMixin, DeleteView):
         return queryset
 
     def get_success_url(self):
-        return reverse('profile_app:contact-list')
+        try:
+            next = self.request.POST.get('next')
+            return str(next)
+        except:
+            return reverse('profile_app:profilecontacts_templ')
 
     def get_template_names(self):
         return 'profile_app/contact_delete.html'
@@ -215,7 +225,12 @@ class ContactUpdateView(LoginRequiredMixin, View):
             contact.contact_type = data['contact_type']
             contact.description = data['description']
             contact.save()
-            return redirect('profile_app:contact-list')
+
+            try:
+                next = self.request.POST.get('next')
+                return HttpResponseRedirect(next)
+            except:
+                return redirect('profile_app:profilecontacts_templ')
 
         context = {
             'form': form

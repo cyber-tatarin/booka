@@ -20,7 +20,7 @@ class ProfileUpdateForm(forms.Form):
 
     bio = forms.CharField(max_length=199, required=False,
                           widget=forms.Textarea(attrs={'class': 'input-book-description-textarea',
-                                                        'placeholder': 'Введите описание профиля'}))
+                                                       'placeholder': 'Введите описание профиля'}))
 
     city = forms.CharField(max_length=40, required=False,
                            widget=forms.TextInput(attrs={'class': 'input-book',
@@ -51,22 +51,17 @@ CHOICES = [('Instagram', 'Instagram'),
 
 class ContactCreateForm(forms.Form):
     contact = forms.CharField(max_length=100, required=False,
-                              widget=forms.TextInput(attrs={'class': 'form-control',
-                                                            'id': "contact",
-                                                            'aria-describedby': "city-help"}))
+                              widget=forms.TextInput(attrs={'class': 'input-book',
+                                                            'placeholder': 'Введите контакт'}))
 
-    contact_type = forms.CharField(widget=forms.RadioSelect(choices=CHOICES, attrs={'class': 'form-control',
-                                                                                    'id': "contactType",
-                                                                                    'aria-describedby': "city-help"}))
+    contact_type = forms.CharField(widget=forms.RadioSelect(choices=CHOICES, attrs={'class': "radio-input"}))
 
     description = forms.CharField(max_length=100, required=False,
-                                  widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                'id': "description",
-                                                                'aria-describedby': "city-help"}))
+                                  widget=forms.Textarea(attrs={'class': 'input-book-description-textarea',
+                                                                'placeholder': 'Введите описание контакта'}))
 
 
 class UserPasswordChangeForm(PasswordChangeForm):
-
     old_password = forms.CharField(
         label=_("Old password"),
         strip=False,

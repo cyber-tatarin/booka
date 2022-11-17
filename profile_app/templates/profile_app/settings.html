@@ -20,17 +20,18 @@
 </head>
 
 <body>
-    <header class="header">
+ <header class="header">
         <div class="container">
             <div class="common-rectangle">
-                <div class="rectangle-main"></div>
+                <div class="rectangle-main">
+                    <span class="booka-span-first booka-span1">BOOKA</span>
+                </div>
             </div>
 
 
+
         <div class="main-content-options">
-            <p class="lenta-options">Настройки</p>
-        </div>
-        <div class="main-options-container-buttons">
+            <p class="settings">Настройки</p>
 
             <div class="book-container-button">
                 <div class="book-attributes-button">
@@ -70,10 +71,22 @@
                 <p class="button-p">Написать в техподдержку</p>
             </button>
                 </a>
-        </div></div></div></div>
+        </div></div></div>
+
+            <div class="book-container-button">
+            <div class="book-attributes-button">
+                <div class="last-button-4">
+                    <a href="{% url 'logout' %}">
+                        <button class="last-button-add-4-last">
+                            <p class="button-p">Выйти из аккаунта</p>
+                        </button>
+                    </a>
+        </div></div></div>
+        </div>
+
+               <div class="gogo"></div>
 
          <div class="bottom-rectangle">
-
 
             <a class="home-icon" href="{% url 'books:book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
             <a class="search-icon" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>

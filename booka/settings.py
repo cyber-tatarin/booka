@@ -30,7 +30,7 @@ SECRET_KEY = get_random_secret_key()
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://ec96-185-203-155-41.eu.ngrok.io']
+CSRF_TRUSTED_ORIGINS = ['https://83b5-185-203-155-41.eu.ngrok.io']
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'

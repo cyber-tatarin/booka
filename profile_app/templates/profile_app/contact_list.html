@@ -20,20 +20,21 @@
 </head>
 
 <body>
-    <header class="header">
+ <header class="header">
         <div class="container">
             <div class="common-rectangle">
-                <div class="rectangle-main"></div>
+                <div class="rectangle-main">
+                    <span class="booka-span-first booka-span1">BOOKA</span>
+                </div>
             </div>
 
-        <div class="main-content-book">
 
             {% if contacts %}
             <div class="main-content-book">
             <p class="lenta">Мои контакты </p>
 
             <div class="test-button-short">
-                <a href="{% url 'profile_app:contact-create' %}">
+                <a href="{% url 'profile_app:contact-create' %}?next={{ request.path|urlencode }}">
             <button class="add-to-wishlist">
                 <p class="button-p">Добавить контакт</p>
             </button>
@@ -50,11 +51,11 @@
 
                     <div class="two-buttons">
 
-                        <button class="change-button" onclick="window.location.href = '{% url 'profile_app:contact-update' contact.id %}'">
+                        <button class="change-button" onclick="window.location.href = '{% url 'profile_app:contact-update' contact.id %}?next={{ request.path|urlencode }}'">
                             <p class="button-p">Изменить</p>
                         </button>
 
-                        <button class="delete-button" onclick="window.location.href = '{% url 'profile_app:contact-delete' contact.id %}'">
+                        <button class="delete-button" onclick="PopUp('{% url 'profile_app:contact-delete' contact.id %}')">
                             <p class="button-p">Удалить</p>
                         </button>
                     </div>
@@ -66,7 +67,7 @@
 
             {% else %}
 
-                     <div class="main-content-search">
+           <div class="main-content-book">
             <p class="lenta">Мои контакты </p>
             <div class="test-button-short">
                 <a href="{% url 'profile_app:contact-create' %}">
@@ -79,7 +80,7 @@
                 <p class="lets-try">Пока что Вы не добавили ни одного контакта :(
                 </p>
                 </div>
-            </div>
+
         <script>
         document.querySelector('.add-to-wishlist').style.margin = "0px";
         document.querySelector('.greeting-container').style.padding = "0px 0px 0px 52px";
@@ -87,6 +88,7 @@
             {% endif %}
 
         </div>
+
         <div class="bottom-rectangle">
 
 
@@ -99,14 +101,59 @@
             <a href="{% url 'profile_app:books-profile' userid %}" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a></div>
 
         </div>
-
+        </div>
         </div>
     </header>
+
+  <div class="pop-up">
+        <div class="book-container-for-popup">
+            <div class="book-attributes-change">
+
+                <p class="caption">Вы уверены, что хотите удалить этот контакт?</p>
+
+ <form id="form-delete" class="modal-content" method="post"> {% csrf_token %}
+
+                <div class="two-buttons">
+                    <button class="change-button-orange" type="submit" name="next" value="{{ request.path|urlencode }}">
+                        <p class="button-p">Удалить</p>
+                    </button>
+                    <button class="delete-button" type="button" onclick="PopDelete()">
+                        <p class="button-p">Отменить</p>
+                    </button>
+                </div>
+
+ </form>
+            </div>
+        </div>
+    </div>
+
+
     <script>
+
+ function PopUp(x){
+
+
+            document.querySelector('.pop-up').style.display = "block";
+            document.querySelector('body').style.overflowY = "hidden";
+            document.querySelector('.modal-content').action = x;
+
+            return x;
+        };
+
+        function PopDelete(){
+
+
+            let countOfSections = document.querySelectorAll('section');
+
+            document.querySelector('.pop-up').style.display = "none";
+
+            document.querySelector('body').style.overflowY = "visible";
+
+        };
 
         let countOfSections = document.querySelectorAll('section');
 
-        if (countOfSections.length == 0) {
+        if (countOfSections.length == 0 || countOfSections.length == 1) {
 
             document.querySelector('.main-content-book').style.height = "1000px";
             document.querySelector('body').style.overflowY = "hidden";

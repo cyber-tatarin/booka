@@ -82,13 +82,15 @@ class BookCreateView(LoginRequiredMixin, View):
                 buf = AuthorModel.objects.get_or_create(name=author)
                 book.authors.add(buf[0])
 
-            if book.book_type == 1:
+            try:
+                next = request.POST.get('next')
+                return HttpResponseRedirect(next)
+            except:
                 return redirect('books:book-view')
-            else:
-                return redirect('books:wish-book-view')
 
         context = {
-            'form': form
+            'form': form,
+            'userid': request.user.id
         }
 
         return render(request, self.template_name, context)
@@ -151,13 +153,15 @@ class BookUpdateView(LoginRequiredMixin, View):
 
             book.save()
 
-            if book.book_type == 1:
+            try:
+                next = request.POST.get('next')
+                return HttpResponseRedirect(next)
+            except:
                 return redirect('books:book-view')
-            else:
-                return redirect('books:wish-book-view')
 
         context = {
-            'form': form
+            'form': form,
+            'userid': request.user.id
         }
 
         return render(request, self.template_name, context)
@@ -171,10 +175,11 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
         return queryset
 
     def get_success_url(self):
-        if self.kwargs.get('type') == 1:
-            return reverse('books:book-view')
-        else:
-            return reverse('books:wish-book-view')
+        try:
+            next = self.request.POST.get('next')
+            return str(next)
+        except:
+            return redirect('books:book-view')
 
     def get_template_names(self):
         return 'books/books_delete.html'

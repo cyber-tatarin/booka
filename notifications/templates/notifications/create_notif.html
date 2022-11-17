@@ -21,10 +21,12 @@
 </head>
 
 <body>
-    <header class="header">
+<header class="header">
         <div class="container">
             <div class="common-rectangle">
-                <div class="rectangle-main"></div>
+                <div class="rectangle-main">
+                    <span class="booka-span-first booka-span1">BOOKA</span>
+                </div>
             </div>
 
 <form method="post" enctype="multipart/form-data">
@@ -73,7 +75,7 @@
         </div>
 
         <div class="last-button">
-            <button class="last-button-add" type="submit">
+            <button class="last-button-add" type="submit" name="next" value="{{ request.GET.next }}">
                 <p class="button-p" >Отправить</p>
             </button>
         </div>

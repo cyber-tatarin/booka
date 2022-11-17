@@ -20,11 +20,13 @@
     </head>
 
     <body>
-        <header class="header">
-            <div class="container">
-                <div class="common-rectangle">
-                    <div class="rectangle-main"></div>
+ <header class="header">
+        <div class="container">
+            <div class="common-rectangle">
+                <div class="rectangle-main">
+                    <span class="booka-span-first booka-span1">BOOKA</span>
                 </div>
+            </div>
 
 
                 <form method="post" enctype="multipart/form-data">
@@ -35,31 +37,41 @@
 
                     <section>
                         <div class="book-container">
-                            <div class="book-attributes-change">
+                            <div class="book-attributes-change-pasw">
                                 <p class="caption">Никнейм</p>
-                                    <div class="add-book-name">
+                                    <div class="add-book-name add-book-name-change">
                                     {{form.username}}
                                     </div>
-                                {% if form.username.errors %}
-                                {{ form.username.errors }}
-                                {% endif %}
+                                <a class="profile-name left-margin" href="{% url 'register' %}">Зарегистрироваться</a>
                             </div>
                         </div>
                     </section>
 
                     <section>
                         <div class="book-container">
-                            <div class="book-attributes-change">
+                            <div class="book-attributes-change-pasw">
                                 <p class="caption">Пароль</p>
-                                    <div class="add-book-name">
+                                    <div class="add-book-name add-book-name-change">
                                     {{form.password}}
                                     </div>
-                                {% if form.password.errors %}
-                                {{ form.password.errors }}
-                                {% endif %}
+                                <a class="profile-name left-margin" href="{% url 'password_reset' %}">Забыли пароль?</a>
+
                             </div>
                         </div>
                     </section>
+
+
+                    {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+                {% endfor %}
+                {% endif %}
 
                 </div>
 
@@ -72,13 +84,6 @@
                 </div>
 
        </form>
-
-                {% if form.errors %}
-                <p>Неправильный логин или пароль</p>
-                {% endif %}
-
-        <a href="{% url 'password_reset' %}">Забыли пароль?</a>
-
             </div>
         </header>
      </body>

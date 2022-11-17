@@ -24,10 +24,12 @@
 
 <body>
 
-    <header class="header">
+<header class="header">
         <div class="container">
             <div class="common-rectangle">
-                <div class="rectangle-main"></div>
+                <div class="rectangle-main">
+                    <span class="booka-span-first booka-span1">BOOKA</span>
+                </div>
             </div>
 
             {% if received %}
@@ -69,7 +71,7 @@
                     <p class="comment comment-fonts">{{notif.message}}</p>
 
 
-                <a href="{% url 'notification:notif-create' notif.sender.id notif.book.id %}">
+                <a href="{% url 'notification:notif-create' notif.sender.id notif.book.id %}?next={{ request.path|urlencode }}">
                 <button class="button-add">
                         <p class="button-p">Ответить</p>
                 </button>
@@ -119,19 +121,19 @@
 
 <script>
 
-     let countOfSections = document.querySelectorAll('.section');
+     let countOfSections = document.querySelectorAll('section');
 
-        if (countOfSections.length == 0 ) {
+        if (countOfSections.length == 0) {
             document.querySelector('.main-content-search').style.height = "1000px";
             document.querySelector('body').style.overflowY = "hidden";
 
-        }
+        };
 
-                if (countOfSections.length == 1 ) {
+        if (countOfSections.length == 1) {
             document.querySelector('.main-content-book').style.height = "1000px";
             document.querySelector('body').style.overflowY = "hidden";
 
-        }
+        };
 
 </script>
 

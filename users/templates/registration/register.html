@@ -20,11 +20,13 @@
     </head>
 
     <body>
-        <header class="header">
-            <div class="container">
-                <div class="common-rectangle">
-                    <div class="rectangle-main"></div>
+ <header class="header">
+        <div class="container">
+            <div class="common-rectangle">
+                <div class="rectangle-main">
+                    <span class="booka-span-first booka-span1">BOOKA</span>
                 </div>
+            </div>
 
 
                 <form method="post" enctype="multipart/form-data">
@@ -41,12 +43,22 @@
                                     <div class="add-book-name">
                                     {{form.username}}
                                     </div>
-                                {% if form.username.errors %}
-                                {{ form.username.errors }}
-                                {% endif %}
                             </div>
                         </div>
                     </section>
+
+                    {% if form.username.errors %}
+                              {% for error in form.username.errors %}
+                               <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+                    {% endfor %}
+                    {% endif %}
+
                     <section>
                         <div class="book-container">
                             <div class="book-attributes-change">
@@ -54,9 +66,23 @@
                                     <div class="add-book-name">
                                     {{form.email}}
                                     </div>
+
                             </div>
                         </div>
                     </section>
+
+                    {% if form.email.errors %}
+                              {% for error in form.email.errors %}
+                               <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+                    {% endfor %}
+                    {% endif %}
+
                     <section>
                         <div class="book-container">
                             <div class="book-attributes-change">
@@ -64,12 +90,23 @@
                                     <div class="add-book-name">
                                     {{form.password1}}
                                     </div>
-                                {% if form.password1.errors %}
-                                {{ form.password1.errors }}
-                                {% endif %}
+
                             </div>
                         </div>
                     </section>
+
+                    {% if form.password1.errors %}
+                              {% for error in form.password1.errors %}
+                               <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+                    {% endfor %}
+                    {% endif %}
+
                     <section>
                         <div class="book-container">
                             <div class="book-attributes-change">
@@ -77,12 +114,34 @@
                                     <div class="add-book-name">
                                     {{form.password2}}
                                     </div>
-                                {% if form.password2.errors %}
-                                {{ form.password2.errors }}
-                                {% endif %}
                             </div>
                         </div>
                     </section>
+
+                    {% if form.password2.errors %}
+                         {% for error in form.password2.errors %}
+                               <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+                    {% endfor %}
+                    {% endif %}
+
+                     {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+                {% endfor %}
+                {% endif %}
+
                 </div>
 
                     <div class="last-button">

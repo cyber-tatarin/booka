@@ -9,6 +9,8 @@ from .forms import NotifCreateForm
 from .models import Notifications
 from books.models import BookModel
 from users.models import Contacts
+from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 
 User = get_user_model()
 
@@ -50,7 +52,21 @@ class NotifCreateView(LoginRequiredMixin, View):
                                   book=book)
             notif.save()
 
-            return redirect(reverse('notification:sent-notif-list'))
+            send_mail(
+                f'Booka: Вы получили запрос на книгу {book}',
+                f'Приветствуем! Вы получили запрос на книгу {book} от пользователя {request.user.username}! \n'
+                f'Вот, что букер пишет Вам: {data["message"]}. \n'
+                f'Зайдите на буку, чтобы ответить ',
+                'tatarinarin22@gmail.com',
+                [receiver.email],
+                fail_silently=True,
+            )
+
+            try:
+                next = request.POST.get('next')
+                return HttpResponseRedirect(next)
+            except:
+                return redirect('books:book-view')
 
         context = {
             'form': form,

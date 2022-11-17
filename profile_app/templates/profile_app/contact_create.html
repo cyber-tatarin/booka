@@ -1,46 +1,115 @@
-{% extends 'lh/base.html' %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
+{% load static %}
 {% block content %}
+{% load widget_tweaks %}
 
-    <h1>Добавить контакт</h1>
-    <hr>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400,700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/styleb.css' %}">
+        <title>Document</title>
+    </head>
 
-    {% if form.errors %}
-        <p>{{ form.errors.error }}</p>
-    {% endif %}
+    <body>
+ <header class="header">
+        <div class="container">
+            <div class="common-rectangle">
+                <div class="rectangle-main">
+                    <span class="booka-span-first booka-span1">BOOKA</span>
+                </div>
+            </div>
 
 
-<form method="post" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
 
-        <div class="mb-3"  align="left">
-            <label for="contact" class="form-label">Контакт</label>
-            {{ form.contact }}
-            <div id="titleHelp" class="form-text"></div>
+                <div class="main-content-options">
+                    <p class="lenta">Добавление контакта</p>
+
+
+                    <section>
+                        <div class="book-container">
+                            <div class="book-attributes-change">
+                                <p class="caption">Название</p>
+                                    <div class="add-book-name">
+                                    {{form.contact}}
+                                    </div>
+                            </div>
+                        </div>
+                    </section>
+
+                  <section>
+                <div class="book-container">
+                    <div class="book-attributes-change">
+                        <p class="caption">Тип контакта</p>
+
+                        <div class="radio">
+                            <div class="radio-item first-radio-item"> <input id="radio1" name="contact_type" value="Instagram" type="radio" class="radio-input" required="">
+                                <label for="radio1" class="label-font-radio">Instagram</label></div>
+                            <div class="radio-item middle-radio-item"> <input id="radio2" name="contact_type" value="Telegram" type="radio" class="radio-input" required="">
+                                <label for="radio2" class="label-font-radio">Telegram</label></div>
+
+                            <div class="radio-item last-radio-item"> <input id="radio3" name="contact_type" value="Номер телефона" type="radio" class="radio-input" required="">
+                                 <label for="radio3" class="label-font-radio">Номер телефона</label></div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+                    <section>
+                        <div class="book-container">
+                            <div class="book-attributes-change">
+                                <p class="caption">Описание</p>
+                                <div class="add-book-description">
+                                    {{form.description}}
+                                </div>
+                                <p class="comment-for-authors">Здесь Вы можете написать, в какое время с Вами лучше связываться.
+                                    <br>
+                                    <br>Или как стоит начать сообщение, чтобы оно не потерялось среди остальных чатов :)</p>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+
+                <div class="last-button">
+                    <button class="last-button-add" type="submit" id="upload" name="next" value="{{ request.GET.next }}">
+                        <p class="button-p">Добавить котакт</p>
+                    </button>
+                </div>
+
+       </form>
+
+                 <div class="bottom-rectangle">
+
+
+            <a class="home-icon" href="{% url 'books:book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
+            <a class="search-icon" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
+            <a class="mail-icon" href="{% url 'notification:received-notif-list' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
+            <a href="{% url 'books:wish-book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
+            <div class="user-with-point">
+                <div class="point-user "> </div>
+            <a href="{% url 'profile_app:books-profile' request.user.id %}" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a></div>
+
         </div>
+            </div>
+        </header>
 
+    </body>
 
-        <div class="form-radio"  align="left">
-            <label for="contactType" class="form-label">Тип контакта</label>
-    {{ form.contact_type }}
-        </div>
-
-
-
-
-    <div class="blank"></div>
-
-        <div class="mb-3"  align="left">
-            <label for="description" class="form-label">Дополнительная информация</label>
-            {{ form.description }}
-            <div id="massHelp" class="form-text">Средняя масса одной вещи ~200 грамм</div>
-        </div>
-
-    <div class="blank"></div>
-
-        {% csrf_token %}
-
-        <button type="submit" class="btn btn-success">Добавить</button>
-
-    </form>
+</html>
 
 {% endblock %}

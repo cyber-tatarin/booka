@@ -25,14 +25,17 @@
 {% if not search_req %}
 <script>document.querySelector('body').style.overflowY = "hidden";</script>
 {% endif %}
-    <header class="header">
+ <header class="header">
         <div class="container">
             <div class="common-rectangle">
-                <div class="rectangle-main"></div>
+                <div class="rectangle-main">
+                    <span class="booka-span-first booka-span1">BOOKA</span>
+                </div>
             </div>
+
             <form class="search" method="get">
                 <input name="search" class="inner-search" type="text" maxlength="100" placeholder="Введите название книги или автора" required
-                value="{% if search_req %} {{search_req}} {% endif %}">
+                value="{% if search_req %}{{search_req}}{% endif %}">
                 <button class="button-search" id="circle" type="submit">
                     <img class="img-search" src="{{MEDIA_URL}}images/search.png" >
                 </button>
@@ -98,7 +101,7 @@
                         </div>
                     </div>
                     {% if userid != book.owner.id %}
-                <a href="{% url 'notification:notif-create' book.owner.id book.id %}">
+                <a href="{% url 'notification:notif-create' book.owner.id book.id %}?next={{ request.path|urlencode }}{% if search_req %}?search={{search_req}}{% endif %} ">
                 <button class="button-add">
                         <p class="button-p">Запросить книгу через сайт</p>
                 </button>

@@ -21,10 +21,12 @@
     <title>Document</title>
 </head>
 <body>
-    <header class="header">
+ <header class="header">
         <div class="container">
             <div class="common-rectangle">
-                <div class="rectangle-main"></div>
+                <div class="rectangle-main">
+                    <span class="booka-span-first booka-span1">BOOKA</span>
+                </div>
             </div>
 
             {% if book_list %}
@@ -32,7 +34,7 @@
             <p class="lenta">Мой Виш-лист </p>
 
             <div class="test-button-short">
-                <a href="{% url 'books:book-create' type %}">
+                <a href="{% url 'books:book-create' type %}?next={{ request.path|urlencode }}">
             <button class="add-to-wishlist">
                 <p class="button-p">Добавить книгу в Виш-лист</p>
             </button>
@@ -117,7 +119,7 @@
  <form id="form-delete" class="modal-content" method="post"> {% csrf_token %}
 
                 <div class="two-buttons">
-                    <button class="change-button-orange" type="submit">
+                    <button class="change-button-orange" type="submit" name="next" value="{{ request.path|urlencode }}">
                         <p class="button-p">Удалить</p>
                     </button>
                     <button class="delete-button" type="button" onclick="PopDelete()">

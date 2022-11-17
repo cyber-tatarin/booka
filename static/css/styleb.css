@@ -80,7 +80,8 @@ body {
 .common-rectangle {
     /* position: fixed; */
     margin: auto;
-    position: relative; 
+    padding: 0px 49px;
+    display: flex;
     width: 100%;
     height: 70px;
     background: #FFFFFF;
@@ -91,13 +92,15 @@ body {
 }
 
 .rectangle-main {
-    position: absolute;
-    width: 26.6%;
-    height: 30px;
-    background: #D9D9D9;
-    border-radius: 15px 15px 15px 15px;
-    margin-left: 62px;
-    margin-top: 20px;;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 40px;
+    background: #FFAB90;
+    border-radius: 20px 20px 20px 20px;
+
+    margin-top: 15px;;
     margin-bottom: 30px;
     box-shadow: none;
     
@@ -168,8 +171,8 @@ body {
 }
 
 .img-search {
-    max-width: 25px;
-    max-height: 25px;
+    max-width: 22px;
+    max-height: 22px;
 }
 
 .input-book {
@@ -293,7 +296,7 @@ input {
 
 input {
     height: 50px;
-    padding-left: 18px;
+    padding-left: 30px;
 }
   
 .button-search {
@@ -306,8 +309,8 @@ input {
     /* background: #000000; */
     border-radius: 26px;
     margin: auto;
-    top: 32px;
-    right: 32px;
+    top: 30px;
+    right: 34px;
     cursor: pointer;
 }
 
@@ -470,7 +473,7 @@ button:not(.button-search):hover {
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 15px;
+    line-height: 18px;
 }
 
 .test-button-short {
@@ -897,9 +900,23 @@ a:hover {
 }
 
 .book-attributes { 
-    padding: 32px 16px 0px 16px;
+    padding: 16px 16px 0px 16px;
 }
 
+.gogo{
+margin-bottom: 100px;
+}
+
+.book-attributes-change-pasw {
+    padding: 32px 16px 16px 16px;
+}
+.settings{
+    padding: 40px 0px 8px  40px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    margin-left: 12px;
+}
 .comment-for-photo {
     margin-left: 12px;
     margin-top: 15px;
@@ -1075,7 +1092,7 @@ a:hover {
 .button-p,.profile-inner-button {
     font-style: normal;
     font-weight: 700;
-    font-size: 10px;
+    font-size: 11px;
     line-height: 139.9%;
 
 text-align: center;
@@ -1136,14 +1153,117 @@ text-align: center;
     padding: 32px 16px 0px 16px;
 }
 
+.radio {
+    margin-top: 4px;
+    margin-left: 16px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.radio-item {
+    height: 20px;
+   display: flex;
+   align-items: center;
+   flex-direction: row;
+   margin-bottom: 12px;
+}
+
+.last-radio-item{
+    margin-bottom: 16px;
+    height: 100%;
+}
+
+.first-radio-item{
+   margin-top: 8px;
+   margin-bottom: 12px;
+   height: 100%;
+}
+
+.middle-radio-item {
+    height: 17.4px;
+    margin-bottom: 12px;
+}
+
+.radio-input{
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.radio-input+label{
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+
+}
+
+.radio-input+label::before {
+    content: '';
+    box-shadow: 0px 0px 0px 1px #757575;
+    width: 19.4px;
+    height: 19.4px;
+    border-radius: 50%;
+    margin-right: 12px;
+  }
+
+.label-font-radio{
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 139.9%;
+}
+
+.radio-input:checked+label::before {
+    margin-right: 12px;
+    background-color:#FFAB90 ;
+    width: 11.4px;
+    height:11.4px;
+    border: 4px solid #ffffff;
+    border-color: #ffffff;
+    box-shadow: 0px 0px 0px 1px #757575;
+}
+
+
+.booka-span1,.booka-span2,.booka-span3,.booka-span4,.booka-span5{
+    font-style: italic;
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 20px;
+    color: #FFFFFF;
+}
+
+.add-book-name-change{
+    margin-bottom: 16px;
+}
+
+.left-margin{
+    margin-left: 16px;
+}
+
+.booka-span2{
+    transform: rotateX(180deg);
+}
+
+.booka-span3{
+    font-style: normal;
+
+}
+
+.booka-span4{
+    transform: rotateY(180deg);
+}
+
+
 @media (max-width: 410px) {
 
-    .author-name {    
+    .author-name {
         margin-top: 8px;
         font-size: 20px;
-        line-height: 15px; 
+        line-height: 15px;
     }
-    
+
     .profile-image {
         width: 120px;
         height: 120px;
@@ -1171,10 +1291,10 @@ text-align: center;
 
 @media (max-width: 370px) {
 
-    .author-name {    
+    .author-name {
         margin-top: 8px;
         font-size: 18px;
-        line-height: 15px; 
+        line-height: 15px;
     }
     .profile-image {
         width: 110px;
@@ -1210,7 +1330,7 @@ text-align: center;
     .img-icons {
         max-width: 25px;
         max-height: 25px;
-    } 
+    }
 
 }
 

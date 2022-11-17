@@ -20,10 +20,12 @@
 </head>
 
 <body>
-    <header class="header">
+ <header class="header">
         <div class="container">
             <div class="common-rectangle">
-                <div class="rectangle-main"></div>
+                <div class="rectangle-main">
+                    <span class="booka-span-first booka-span1">BOOKA</span>
+                </div>
             </div>
 
 
@@ -54,8 +56,8 @@
                     </div>
                     {% endif %}
                     <div class="books-icons">
-                        {% if book.city %}
-                        <div class="info2"><img class="icon2" src="{{MEDIA_URL}}images/placeholder.png"><span class="description">{{book.city}}</span></div>
+                        {% if book.owner.city %}
+                        <div class="info2"><img class="icon2" src="{{MEDIA_URL}}images/placeholder.png"><span class="description">{{book.owner.city}}</span></div>
                         {% else %}
                         <div class="info2"><img class="icon2" src="{{MEDIA_URL}}images/placeholder.png"><span class="description">Не указано</span></div>
                         {% endif %}
@@ -74,11 +76,22 @@
                     </div>
 
                     {% if current_user != book.owner %}
-                    <a href="{% url 'notification:notif-create' book.owner.id book.id %}">
+                    <a href="{% url 'notification:notif-create' book.owner.id book.id %}?next={{ request.path|urlencode }}">
                 <button class="button-add">
                         <p class="button-p">Запросить книгу через сайт</p>
                 </button>
                     </a>
+                    {% else %}
+                    <div class="two-buttons">
+
+                        <button class="change-button" onclick="window.location.href = '{% url 'books:book-update' book.id %}?next={{ request.path|urlencode }}'">
+                            <p class="button-p">Изменить</p>
+                        </button>
+
+                        <button class="delete-button" onclick="PopUp('{% url 'books:book-delete' book.id %}')">
+                            <p class="button-p" >Удалить</p>
+                        </button>
+                    </div>
                     {% endif %}
 
                 </div>
@@ -105,6 +118,29 @@
 
         </div>
     </header>
+
+    <div class="pop-up">
+        <div class="book-container-for-popup">
+            <div class="book-attributes-change">
+
+                <p class="caption">Вы уверены, что хотите удалить эту книгу?</p>
+
+ <form id="form-delete" class="modal-content" method="post"> {% csrf_token %}
+
+                <div class="two-buttons">
+                    <button class="change-button-orange" type="submit" name="next" value="{{ request.path|urlencode }}" >
+                        <p class="button-p">Удалить</p>
+                    </button>
+                    <button class="delete-button" type="button" onclick="PopDelete()">
+                        <p class="button-p">Отменить</p>
+                    </button>
+                </div>
+
+ </form>
+            </div>
+        </div>
+    </div>
+
 <script>
 
         let countOfSections = document.querySelectorAll('.section');
@@ -115,9 +151,38 @@
            document.querySelector('body').style.overflowY = "hidden";
        }
 
+        function PopUp(x){
+
+
+            document.querySelector('.pop-up').style.display = "block";
+            document.querySelector('body').style.overflowY = "hidden";
+            document.querySelector('.modal-content').action = x;
+
+            return x;
+        };
+
+        function PopDelete(){
+
+
+            let countOfSections = document.querySelectorAll('section');
+
+            document.querySelector('.pop-up').style.display = "none";
+
+            if (countOfSections.length == 0 || countOfSections.length == 1 || countOfSections.length == 2)
+            {
+            document.querySelector('body').style.overflowY = "hidden";
+            }
+            else
+            {
+            document.querySelector('body').style.overflowY = "visible";
+            }
+
+            };
+
     </script>
 </body>
 </html>
 
 {% endblock %}
+
 
