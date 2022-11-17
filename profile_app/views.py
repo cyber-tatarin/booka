@@ -113,7 +113,8 @@ class ProfileUpdateView(LoginRequiredMixin, View):
 
         context = {
             'form': form,
-            'photo': curr_user.photo
+            'photo': curr_user.photo,
+            'userid': request.user.id
         }
 
         return render(request, self.template_name, context)
