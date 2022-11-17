@@ -48,6 +48,18 @@
                         </div>
                     </section>
 
+                    {% if form.name.errors %}
+            {% for error in form.name.errors %}
+                <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+            {% endfor %}
+            {% endif %}
+
                     <section>
                         <div class="book-container">
                             <div class="book-attributes">
@@ -61,6 +73,18 @@
                             </div>
                         </div>
                     </section>
+
+                     {% if form.authors.errors %}
+            {% for error in form.authors.errors %}
+                <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+            {% endfor %}
+            {% endif %}
 
                     <section>
                         <div class="book-container">
@@ -80,6 +104,18 @@
                         </div>
                     </section>
 
+                     {% if form.image.errors %}
+            {% for error in form.image.errors %}
+                <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+            {% endfor %}
+            {% endif %}
+
                     <section>
                         <div class="book-container">
                             <div class="book-attributes">
@@ -94,6 +130,18 @@
                         </div>
                     </section>
 
+                      {% if form.description.errors %}
+            {% for error in form.description.errors %}
+                <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+            {% endfor %}
+            {% endif %}
+
                     <section>
                         <div class="book-container">
                             <div class="book-attributes">
@@ -105,6 +153,19 @@
 
                         </div>
                     </section>
+
+                     {% if form.language.errors %}
+            {% for error in form.language.errors %}
+                <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+            {% endfor %}
+            {% endif %}
+
                     <section>
                         <div class="book-container">
                             <div class="book-attributes">
@@ -118,6 +179,29 @@
 
                 </div>
 
+                    {% if form.year.errors %}
+            {% for error in form.year.errors %}
+                <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+            {% endfor %}
+            {% endif %}
+
+                    {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <section>
+                <div class="book-container">
+                    <div class="book-attributes">
+                        <p class="appearance">{{error}}</p>
+                    </div>
+                </div>
+            </section>
+                {% endfor %}
+                {% endif %}
 
                 <div class="last-button">
                     <button class="last-button-add" type="submit" id="upload" name="next" value="{{ request.GET.next }}">

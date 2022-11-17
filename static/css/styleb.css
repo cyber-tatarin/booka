@@ -132,7 +132,8 @@ body {
     border-radius: 86px;
     border-width: 2px;
     margin: auto;
-    box-shadow: none;   
+    box-shadow: none;
+
 }
 
 .choose-profile-image {
@@ -216,6 +217,14 @@ textarea:focus {
     outline: none;
 }
 
+.super{
+    padding-left: 30px;
+}
+
+.point-search-margin{
+    margin-left: 5px;
+}
+
 /* .input-book-description-textarea:invalid:required {
     border: 3px solid black;
   } */
@@ -296,9 +305,10 @@ input {
 
 input {
     height: 50px;
-    padding-left: 30px;
+    padding-left: 18px;
 }
-  
+
+
 .button-search {
     position: absolute;
     border: none;
@@ -343,11 +353,17 @@ input:invalid:required {
     border: 3px solid #fdd0c2;
   } */
 
-button:not(.button-search):hover {
+button:not(.button-search,.change-button-orange):hover {
+    transition: 0.3s;
+    color: #ffffff;
+    background-color:  #000000;
+}
+
+button.change-button-orange:hover {
     transition: 0.3s;
     background-color:  #FFAB91;
 }
-  
+
 .img-arrow {
     margin: 0px 8px;
 }
@@ -595,7 +611,7 @@ button:not(.button-search):hover {
     display: flex;
     align-items: center;
     line-height: 20px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     margin-left: 0px
 }
 
@@ -647,12 +663,7 @@ button:not(.button-search):hover {
     max-height: 30px;
 }
 
-a:hover {
-    transition: 0.2s;
-    background-color: #fdd0c2;
-    border-radius: 10px;
-    box-shadow: 0 0 25px 5px #FFAB91;
-}
+
 
 .home-with-point,.search-with-point,.mail-with-point,.get-with-icon,.post-with-icon,.medal-with-point,.book-with-point,.contacts-with-point,.list-with-point,.user-with-point { 
     display: flex;
@@ -696,9 +707,6 @@ a:hover {
     position: relative;
 }
 
-.search-icon {
-    margin-right: 5px;
-}
 
 .lenta {
     padding: 40px 0px 24px  40px; 
@@ -868,7 +876,7 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 26px 36px 24px 52px; 
+    padding: 26px 36px 24px 52px;
     font-weight: 600;
     font-size: 14px;
     line-height: 15px;
@@ -1253,6 +1261,26 @@ text-align: center;
 
 .booka-span4{
     transform: rotateY(180deg);
+}
+
+.point-home-hide{
+    background :#FFFFFF;
+}
+
+.point-mail-hide{
+    background :#FFFFFF;
+}
+
+.point-search-hide{
+    background :#FFFFFF;
+}
+
+.point-medal-hide{
+    background :#FFFFFF;
+}
+
+.point-user-hide{
+    background :#FFFFFF;
 }
 
 

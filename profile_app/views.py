@@ -11,6 +11,8 @@ from books.models import BookModel
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.views import PasswordChangeView
 from django.http import HttpResponseRedirect
+from django.core.exceptions import ValidationError
+from django.contrib import messages
 
 User = get_user_model()
 
@@ -94,8 +96,24 @@ class ProfileUpdateView(LoginRequiredMixin, View):
         form = ProfileUpdateForm(data=request.POST, files=request.FILES)
         curr_user = get_object_or_404(User, id=request.user.id)
 
+        context = {
+            'form': form,
+            'photo': curr_user.photo,
+            'userid': request.user.id
+        }
+
+        try:
+            username_check_obj = User.objects.get(username=request.POST.get('username'))
+            if username_check_obj.id != request.user.id:
+                messages.add_message(request, messages.ERROR, "Этот никнейм уже занят. Попробуйте другой")
+                return render(request, self.template_name, context)
+        except ObjectDoesNotExist:
+            pass
+
         if form.is_valid():
+
             data = form.cleaned_data
+
             curr_user.username = data['username']
             curr_user.bio = data['bio']
 
@@ -110,12 +128,6 @@ class ProfileUpdateView(LoginRequiredMixin, View):
             curr_user.save()
 
             return redirect(f'/profile/books/{request.user.id}')
-
-        context = {
-            'form': form,
-            'photo': curr_user.photo,
-            'userid': request.user.id
-        }
 
         return render(request, self.template_name, context)
 

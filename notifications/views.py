@@ -11,6 +11,7 @@ from books.models import BookModel
 from users.models import Contacts
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
+from booka.settings import EMAIL_HOST_USER
 
 User = get_user_model()
 
@@ -54,10 +55,10 @@ class NotifCreateView(LoginRequiredMixin, View):
 
             send_mail(
                 f'Booka: Вы получили запрос на книгу {book}',
-                f'Приветствуем! Вы получили запрос на книгу {book} от пользователя {request.user.username}! \n'
-                f'Вот, что букер пишет Вам: {data["message"]}. \n'
+                f'Приветствуем! Вы получили запрос на книгу {book} от пользователя {request.user.username}! \n \n'
+                f'Вот, что букер пишет Вам: {data["message"]}. \n \n'
                 f'Зайдите на буку, чтобы ответить ',
-                'tatarinarin22@gmail.com',
+                EMAIL_HOST_USER,
                 [receiver.email],
                 fail_silently=True,
             )

@@ -91,14 +91,26 @@
 
         <div class="bottom-rectangle">
 
+<div class="home-with-point">
+                <div class="point-home point-home-hide "> </div>
+            <a class="home-icon home-hover" href="{% url 'books:book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
+     </div>
+     <div class="search-with-point">
+                <div class="point-search point-search-margin point-search-hide"></div>
+            <a class="search-icon search-hover" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
+    </div>
+    <div class="mail-with-point">
+                <div class="point-mail point-mail-hide"></div>
+            <a class="mail-icon mail-hover" href="{% url 'notification:received-notif-list' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
+    </div>
+     <div class="medal-with-point">
+                <div class="point-medal point-medal-hide"></div>
+            <a class="medal-icon medal-hover" href="{% url 'books:wish-book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
+    </div>
 
-            <a class="home-icon" href="{% url 'books:book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
-            <a class="search-icon" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
-            <a class="mail-icon" href="{% url 'notification:received-notif-list' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
-            <a href="{% url 'books:wish-book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
             <div class="user-with-point">
                 <div class="point-user "> </div>
-            <a href="{% url 'profile_app:books-profile' userid %}" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a></div>
+            <a href="{% url 'profile_app:books-profile' userid %}" class="user-hover user-icon"><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a></div>
 
         </div>
         </div>

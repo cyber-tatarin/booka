@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 import datetime
 
-now = datetime.datetime.now()
+
 class BookCreateForm(forms.Form):
 
     authors = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={
@@ -17,7 +17,7 @@ class BookCreateForm(forms.Form):
                 'class': 'input-book',
                 'placeholder': 'Введите название книги'
             }))
-    year = forms.CharField(max_length=4, required=False, widget=forms.TextInput(attrs={
+    year = forms.IntegerField(max_value=datetime.datetime.now().year, required=False, widget=forms.NumberInput(attrs={
                 'class': 'input-book',
                 'placeholder': 'Введите год издания книги'
             }))
@@ -81,7 +81,7 @@ class BookCreateForm(forms.Form):
             year = 0
             return year
         year_int = int(year)
-        cur_year = now.year
+        cur_year = datetime.datetime.now().year
         if re.search(r'\d\d\d\d\d', year):
             raise forms.ValidationError(
                 "Год может состоять только из цифр (максимум 4 цифры)!")

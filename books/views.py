@@ -90,7 +90,8 @@ class BookCreateView(LoginRequiredMixin, View):
 
         context = {
             'form': form,
-            'userid': request.user.id
+            'userid': request.user.id,
+            'type': kwargs['type']
         }
 
         return render(request, self.template_name, context)
