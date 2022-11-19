@@ -1,3 +1,4 @@
+from django.db.models.signals import post_delete, pre_save
 from django.shortcuts import render
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
@@ -10,11 +11,12 @@ from .models import BookModel, AuthorModel
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 import re
-from users.models import Contacts
+from users.models import Contacts, User
+from django.dispatch import receiver
+import os
 
 
 class BookListView(LoginRequiredMixin, View):
-
     login_url = 'login'
     template_name = 'books/books.html'
 
@@ -39,7 +41,6 @@ class BookListView(LoginRequiredMixin, View):
 
 
 class BookCreateView(LoginRequiredMixin, View):
-
     login_url = 'login'
     template_name = 'books/books_create.html'
 
@@ -186,8 +187,48 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
         return 'books/books_delete.html'
 
 
-class WishBookListView(LoginRequiredMixin, View):
+@receiver(post_delete, sender=BookModel)
+def post_save_image(sender, instance, *args, **kwargs):
+    """ Clean Old Image file """
+    try:
+        instance.image.delete(save=False)
+    except:
+        pass
 
+
+@receiver(pre_save, sender=BookModel)
+def pre_save_image(sender, instance, *args, **kwargs):
+    """ instance old image file will delete from os """
+    try:
+        old_img = instance.__class__.objects.get(id=instance.id).image.path
+        try:
+            new_img = instance.image.path
+        except:
+            new_img = None
+        if new_img != old_img:
+            if os.path.exists(old_img):
+                os.remove(old_img)
+    except:
+        pass
+
+
+@receiver(pre_save, sender=User)
+def pre_save_image(sender, instance, *args, **kwargs):
+    """ instance old image file will delete from os """
+    try:
+        old_img = instance.__class__.objects.get(id=instance.id).photo.path
+        try:
+            new_img = instance.photo.path
+        except:
+            new_img = None
+        if new_img != old_img:
+            if os.path.exists(old_img):
+                os.remove(old_img)
+    except:
+        pass
+
+
+class WishBookListView(LoginRequiredMixin, View):
     login_url = 'login'
     template_name = 'books/wish_books.html'
 
