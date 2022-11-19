@@ -41,27 +41,27 @@ class BookCreateForm(forms.Form):
     def clean_authors(self):
         authors = self.cleaned_data['authors']
 
-        if re.search(r'[^а-яА-Яa-zA-Z-,. ]', authors):
+        if re.search(r'[^а-яА-Яa-zA-Z-,.\' ]', authors):
             raise forms.ValidationError(
-                "Имя автора может состоять из букв русского и английского алфавита, символов -,. ")
+                "Имя автора может состоять из букв русского и английского алфавита, символов -,.' ")
 
         return authors
 
     def clean_name(self):
         name = self.cleaned_data['name']
 
-        if re.search(r'[^а-яА-Яa-zA-Z-,.+!?#$%()/@ ]', name):
+        if re.search(r'[^а-яА-Яa-zA-Z-,.+!?#$%()/@\' ]', name):
             raise forms.ValidationError(
-                "Имя книги может состоять из букв русского и английского алфавита, символов -,.+!?#$%()/@")
+                "Имя книги может состоять из букв русского и английского алфавита, символов -,.'+!?#$%()/@")
 
         return name
 
     def clean_description(self):
         description = self.cleaned_data['description']
 
-        if re.search(r'[^а-яА-Яa-zA-Z-,.()%$#@!&*?+=/;:"0123456789 ]', description):
+        if re.search(r'[^а-яА-Яa-zA-Z-,.()%$#@!&*?+=/;:"0123456789\' ]', description):
             raise forms.ValidationError(
-                "Описание может состоять из букв русского и английского алфавита, цифр, символов -,.()%$#@!&*?+=/;:")
+                "Описание может состоять из букв русского и английского алфавита, цифр, символов -,.'()%$#@!&*?+=/;:")
 
         return description
 

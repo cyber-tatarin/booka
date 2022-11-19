@@ -23,7 +23,7 @@
 
 <body>
 {% if not search_req %}
-<script>document.querySelector('body').style.overflowY = "hidden";</script>
+<script>document.querySelector('body').style.overflow = "hidden";</script>
 {% endif %}
  <header class="header">
         <div class="container">
@@ -125,26 +125,234 @@
                 </p>
             </div>
         </div>
-            <script>document.querySelector('body').style.overflowY = "hidden";</script>
+            <script>document.querySelector('body').style.overflow = "hidden";</script>
                 {% endif %}
 
             {% endif %}
 
         <div class="bottom-rectangle">
-            <a class="home-icon" href="{% url 'books:book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
-            <div class="search-with-point">
+
+<div class="home-with-point">
+                <div class="point-home point-home-hide "> </div>
+            <a class="home-icon home-hover" href="{% url 'books:book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/home-page.png" ></a>
+     </div>
+     <div class="search-with-point">
                 <div class="point-search point-search-margin"></div>
-                <a class="search-icon" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
-            </div>
-            <a class="mail-icon" href="{% url 'notification:received-notif-list' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
-            <a href="{% url 'books:wish-book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
-            <a href="{% url 'profile_app:books-profile' userid %}" ><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a>
+            <a class="search-icon search-hover" href="{% url 'search_app:search' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/search.png" ></a>
+    </div>
+    <div class="mail-with-point">
+                <div class="point-mail point-mail-hide"></div>
+            <a class="mail-icon mail-hover" href="{% url 'notification:received-notif-list' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/mail.png" ></a>
+    </div>
+     <div class="medal-with-point">
+                <div class="point-medal point-medal-hide"></div>
+            <a class="medal-icon medal-hover" href="{% url 'books:wish-book-view' %}" ><img class="img-icons" src="{{MEDIA_URL}}images/bookmark.png" ></a>
+    </div>
+
+            <div class="user-with-point">
+                <div class="point-user point-user-hide"> </div>
+            <a href="{% url 'profile_app:books-profile' userid %}" class="user-hover user-icon"><img class="img-icons" src="{{MEDIA_URL}}images/user.png" ></a></div>
 
         </div>
 
         </div>
 
     </header>
+
+<script>
+
+     var pointuser1 = document.querySelector(".user-hover");
+var pointuser11 = document.querySelector(".point-user");
+var pointmedal1 = document.querySelector(".medal-hover");
+var pointmedal11 = document.querySelector(".point-medal");
+var pointsearch1 = document.querySelector(".search-hover");
+var pointsearch11 = document.querySelector(".point-search");
+var pointmail1 = document.querySelector(".mail-hover");
+var pointmail11 = document.querySelector(".point-mail");
+var pointhome1 = document.querySelector(".home-hover");
+var pointhome11 = document.querySelector(".point-home");
+
+
+pointuser1.addEventListener("mouseover", function() {
+    document.querySelector(".point-user-hide").style.background = "#FFAB91"
+    pointuser11.style.width = "30px";
+    pointuser11.style.height = "3px";
+    pointuser11.style.borderRadius = "10px";
+    pointuser11.style.marginBottom = "11px";
+    pointuser11.style.transition = "0.3s";
+})
+
+pointuser1.addEventListener("mouseout", function() {
+    document.querySelector(".point-user-hide").style.background = "#FFFFFF"
+    pointuser11.style.marginBottom = "6px";
+    pointuser11.style.width = "8px";
+    pointuser11.style.height = "8px";
+})
+
+pointmedal1.addEventListener("mouseover", function() {
+    document.querySelector(".point-medal-hide").style.background = "#FFAB91"
+    pointmedal11.style.width = "30px";
+    pointmedal11.style.height = "3px";
+    pointmedal11.style.borderRadius = "10px";
+    pointmedal11.style.marginBottom = "11px";
+    pointmedal11.style.transition = "0.3s";
+})
+
+pointmedal1.addEventListener("mouseout", function() {
+    document.querySelector(".point-medal-hide").style.background = "#FFFFFF"
+    pointmedal11.style.marginBottom = "6px";
+    pointmedal11.style.width = "8px";
+    pointmedal11.style.height = "8px";
+})
+
+pointmail1.addEventListener("mouseover", function() {
+    document.querySelector(".point-mail-hide").style.background = "#FFAB91"
+    pointmail11.style.width = "30px";
+    pointmail11.style.height = "3px";
+    pointmail11.style.borderRadius = "10px";
+    pointmail11.style.marginBottom = "11px";
+    pointmail11.style.transition = "0.3s";
+})
+
+pointmail1.addEventListener("mouseout", function() {
+    document.querySelector(".point-mail-hide").style.background = "#FFFFFF"
+    pointmail11.style.marginBottom = "6px";
+    pointmail11.style.width = "8px";
+    pointmail11.style.height = "8px";
+})
+
+pointsearch1.addEventListener("mouseover", function() {
+
+    document.querySelector(".point-search-margin").style.marginLeft= "0px"
+    pointsearch11.style.width = "30px";
+    pointsearch11.style.height = "3px";
+    pointsearch11.style.borderRadius = "10px";
+    pointsearch11.style.marginBottom = "11px";
+    pointsearch11.style.transition = "0.3s";
+})
+
+pointsearch1.addEventListener("mouseout", function() {
+    document.querySelector(".point-search-margin").style.marginLeft= "5px"
+
+    pointsearch11.style.marginBottom = "6px";
+    pointsearch11.style.width = "8px";
+    pointsearch11.style.height = "8px";
+})
+
+pointhome1.addEventListener("mouseover", function() {
+    document.querySelector(".point-home-hide").style.background = "#FFAB91"
+    pointhome11.style.width = "30px";
+    pointhome11.style.height = "3px";
+    pointhome11.style.borderRadius = "10px";
+    pointhome11.style.marginBottom = "11px";
+    pointhome11.style.transition = "0.3s";
+})
+
+pointhome1.addEventListener("mouseout", function() {
+    document.querySelector(".point-home-hide").style.background = "#FFFFFF"
+    pointhome11.style.marginBottom = "6px";
+    pointhome11.style.width = "8px";
+    pointhome11.style.height = "8px";
+})
+
+<!--Iphone-->
+
+     var pointuser1 = document.querySelector(".user-hover");
+var pointuser11 = document.querySelector(".point-user");
+var pointmedal1 = document.querySelector(".medal-hover");
+var pointmedal11 = document.querySelector(".point-medal");
+var pointsearch1 = document.querySelector(".search-hover");
+var pointsearch11 = document.querySelector(".point-search");
+var pointmail1 = document.querySelector(".mail-hover");
+var pointmail11 = document.querySelector(".point-mail");
+var pointhome1 = document.querySelector(".home-hover");
+var pointhome11 = document.querySelector(".point-home");
+
+
+pointuser1.addEventListener("touchstart", function() {
+    document.querySelector(".point-user-hide").style.background = "#FFAB91"
+    pointuser11.style.width = "30px";
+    pointuser11.style.height = "3px";
+    pointuser11.style.borderRadius = "10px";
+    pointuser11.style.marginBottom = "11px";
+    pointuser11.style.transition = "0.3s";
+})
+
+pointuser1.addEventListener("touchmove", function() {
+    document.querySelector(".point-user-hide").style.background = "#FFFFFF"
+    pointuser11.style.marginBottom = "6px";
+    pointuser11.style.width = "8px";
+    pointuser11.style.height = "8px";
+})
+
+pointmedal1.addEventListener("touchstart", function() {
+
+    pointmedal11.style.width = "30px";
+    pointmedal11.style.height = "3px";
+    pointmedal11.style.borderRadius = "10px";
+    pointmedal11.style.marginBottom = "11px";
+    pointmedal11.style.transition = "0.3s";
+})
+
+pointmedal1.addEventListener("touchmove", function() {
+
+    pointmedal11.style.marginBottom = "6px";
+    pointmedal11.style.width = "8px";
+    pointmedal11.style.height = "8px";
+})
+
+pointmail1.addEventListener("touchstart", function() {
+    document.querySelector(".point-mail-hide").style.background = "#FFAB91"
+    pointmail11.style.width = "30px";
+    pointmail11.style.height = "3px";
+    pointmail11.style.borderRadius = "10px";
+    pointmail11.style.marginBottom = "11px";
+    pointmail11.style.transition = "0.3s";
+})
+
+pointmail1.addEventListener("touchmove", function() {
+    document.querySelector(".point-mail-hide").style.background = "#FFFFFF"
+    pointmail11.style.marginBottom = "6px";
+    pointmail11.style.width = "8px";
+    pointmail11.style.height = "8px";
+})
+
+pointsearch1.addEventListener("touchstart", function() {
+    document.querySelector(".point-search-hide").style.background = "#FFAB91"
+    document.querySelector(".point-search-margin").style.marginLeft= "0px"
+    pointsearch11.style.width = "30px";
+    pointsearch11.style.height = "3px";
+    pointsearch11.style.borderRadius = "10px";
+    pointsearch11.style.marginBottom = "11px";
+    pointsearch11.style.transition = "0.3s";
+})
+
+pointsearch1.addEventListener("touchmove", function() {
+    document.querySelector(".point-search-margin").style.marginLeft= "5px"
+    document.querySelector(".point-search-hide").style.background = "#FFFFFF"
+    pointsearch11.style.marginBottom = "6px";
+    pointsearch11.style.width = "8px";
+    pointsearch11.style.height = "8px";
+})
+
+pointhome1.addEventListener("touchstart", function() {
+    document.querySelector(".point-home-hide").style.background = "#FFAB91"
+    pointhome11.style.width = "30px";
+    pointhome11.style.height = "3px";
+    pointhome11.style.borderRadius = "10px";
+    pointhome11.style.marginBottom = "11px";
+    pointhome11.style.transition = "0.3s";
+})
+
+pointhome1.addEventListener("touchmove", function() {
+    document.querySelector(".point-home-hide").style.background = "#FFFFFF"
+    pointhome11.style.marginBottom = "6px";
+    pointhome11.style.width = "8px";
+    pointhome11.style.height = "8px";
+})
+
+</script>
+
 </body>
 
 {% endblock %}

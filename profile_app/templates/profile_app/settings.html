@@ -113,6 +113,202 @@
 
         </div>
     </header>
+
+
+<script>
+
+
+
+              var pointuser1 = document.querySelector(".user-hover");
+        var pointuser11 = document.querySelector(".point-user");
+        var pointmedal1 = document.querySelector(".medal-hover");
+        var pointmedal11 = document.querySelector(".point-medal");
+        var pointsearch1 = document.querySelector(".search-hover");
+        var pointsearch11 = document.querySelector(".point-search");
+        var pointmail1 = document.querySelector(".mail-hover");
+        var pointmail11 = document.querySelector(".point-mail");
+        var pointhome1 = document.querySelector(".home-hover");
+        var pointhome11 = document.querySelector(".point-home");
+
+
+        pointuser1.addEventListener("mouseover", function() {
+            pointuser11.style.width = "30px";
+            pointuser11.style.height = "3px";
+            pointuser11.style.borderRadius = "10px";
+            pointuser11.style.marginBottom = "11px";
+            pointuser11.style.transition = "0.3s";
+        })
+
+        pointuser1.addEventListener("mouseout", function() {
+            pointuser11.style.marginBottom = "6px";
+            pointuser11.style.width = "8px";
+            pointuser11.style.height = "8px";
+        })
+
+        pointmedal1.addEventListener("mouseover", function() {
+            document.querySelector(".point-medal-hide").style.background = "#FFAB91"
+            pointmedal11.style.width = "30px";
+            pointmedal11.style.height = "3px";
+            pointmedal11.style.borderRadius = "10px";
+            pointmedal11.style.marginBottom = "11px";
+            pointmedal11.style.transition = "0.3s";
+        })
+
+        pointmedal1.addEventListener("mouseout", function() {
+            document.querySelector(".point-medal-hide").style.background = "#FFFFFF"
+            pointmedal11.style.marginBottom = "6px";
+            pointmedal11.style.width = "8px";
+            pointmedal11.style.height = "8px";
+        })
+
+        pointmail1.addEventListener("mouseover", function() {
+            document.querySelector(".point-mail-hide").style.background = "#FFAB91"
+            pointmail11.style.width = "30px";
+            pointmail11.style.height = "3px";
+            pointmail11.style.borderRadius = "10px";
+            pointmail11.style.marginBottom = "11px";
+            pointmail11.style.transition = "0.3s";
+        })
+
+        pointmail1.addEventListener("mouseout", function() {
+            document.querySelector(".point-mail-hide").style.background = "#FFFFFF"
+            pointmail11.style.marginBottom = "6px";
+            pointmail11.style.width = "8px";
+            pointmail11.style.height = "8px";
+        })
+
+        pointsearch1.addEventListener("mouseover", function() {
+            document.querySelector(".point-search-hide").style.background = "#FFAB91"
+            document.querySelector(".point-search-margin").style.marginLeft= "0px"
+            pointsearch11.style.width = "30px";
+            pointsearch11.style.height = "3px";
+            pointsearch11.style.borderRadius = "10px";
+            pointsearch11.style.marginBottom = "11px";
+            pointsearch11.style.transition = "0.3s";
+        })
+
+        pointsearch1.addEventListener("mouseout", function() {
+            document.querySelector(".point-search-margin").style.marginLeft= "5px"
+            document.querySelector(".point-search-hide").style.background = "#FFFFFF"
+            pointsearch11.style.marginBottom = "6px";
+            pointsearch11.style.width = "8px";
+            pointsearch11.style.height = "8px";
+        })
+
+        pointhome1.addEventListener("mouseover", function() {
+            document.querySelector(".point-home-hide").style.background = "#FFAB91"
+            pointhome11.style.width = "30px";
+            pointhome11.style.height = "3px";
+            pointhome11.style.borderRadius = "10px";
+            pointhome11.style.marginBottom = "11px";
+            pointhome11.style.transition = "0.3s";
+        })
+
+        pointhome1.addEventListener("mouseout", function() {
+            document.querySelector(".point-home-hide").style.background = "#FFFFFF"
+            pointhome11.style.marginBottom = "6px";
+            pointhome11.style.width = "8px";
+            pointhome11.style.height = "8px";
+        })
+
+
+<!--Iphone-->
+
+        var pointuser1 = document.querySelector(".user-hover");
+        var pointuser11 = document.querySelector(".point-user");
+        var pointmedal1 = document.querySelector(".medal-hover");
+        var pointmedal11 = document.querySelector(".point-medal");
+        var pointsearch1 = document.querySelector(".search-hover");
+        var pointsearch11 = document.querySelector(".point-search");
+        var pointmail1 = document.querySelector(".mail-hover");
+        var pointmail11 = document.querySelector(".point-mail");
+        var pointhome1 = document.querySelector(".home-hover");
+        var pointhome11 = document.querySelector(".point-home");
+
+
+        pointuser1.addEventListener("touchstart", function() {
+            pointuser11.style.width = "30px";
+            pointuser11.style.height = "3px";
+            pointuser11.style.borderRadius = "10px";
+            pointuser11.style.marginBottom = "11px";
+            pointuser11.style.transition = "0.3s";
+        })
+
+        pointuser1.addEventListener("touchmove", function() {
+            pointuser11.style.marginBottom = "6px";
+            pointuser11.style.width = "8px";
+            pointuser11.style.height = "8px";
+        })
+
+        pointmedal1.addEventListener("touchstart", function() {
+            document.querySelector(".point-medal-hide").style.background = "#FFAB91"
+            pointmedal11.style.width = "30px";
+            pointmedal11.style.height = "3px";
+            pointmedal11.style.borderRadius = "10px";
+            pointmedal11.style.marginBottom = "11px";
+            pointmedal11.style.transition = "0.3s";
+        })
+
+        pointmedal1.addEventListener("touchmove", function() {
+            document.querySelector(".point-medal-hide").style.background = "#FFFFFF"
+            pointmedal11.style.marginBottom = "6px";
+            pointmedal11.style.width = "8px";
+            pointmedal11.style.height = "8px";
+        })
+
+        pointmail1.addEventListener("touchstart", function() {
+            document.querySelector(".point-mail-hide").style.background = "#FFAB91"
+            pointmail11.style.width = "30px";
+            pointmail11.style.height = "3px";
+            pointmail11.style.borderRadius = "10px";
+            pointmail11.style.marginBottom = "11px";
+            pointmail11.style.transition = "0.3s";
+        })
+
+        pointmail1.addEventListener("touchmove", function() {
+            document.querySelector(".point-mail-hide").style.background = "#FFFFFF"
+            pointmail11.style.marginBottom = "6px";
+            pointmail11.style.width = "8px";
+            pointmail11.style.height = "8px";
+        })
+
+        pointsearch1.addEventListener("touchstart", function() {
+            document.querySelector(".point-search-hide").style.background = "#FFAB91"
+            document.querySelector(".point-search-margin").style.marginLeft= "0px"
+            pointsearch11.style.width = "30px";
+            pointsearch11.style.height = "3px";
+            pointsearch11.style.borderRadius = "10px";
+            pointsearch11.style.marginBottom = "11px";
+            pointsearch11.style.transition = "0.3s";
+        })
+
+        pointsearch1.addEventListener("touchmove", function() {
+            document.querySelector(".point-search-margin").style.marginLeft= "5px"
+            document.querySelector(".point-search-hide").style.background = "#FFFFFF"
+            pointsearch11.style.marginBottom = "6px";
+            pointsearch11.style.width = "8px";
+            pointsearch11.style.height = "8px";
+        })
+
+        pointhome1.addEventListener("touchstart", function() {
+            document.querySelector(".point-home-hide").style.background = "#FFAB91"
+            pointhome11.style.width = "30px";
+            pointhome11.style.height = "3px";
+            pointhome11.style.borderRadius = "10px";
+            pointhome11.style.marginBottom = "11px";
+            pointhome11.style.transition = "0.3s";
+        })
+
+        pointhome1.addEventListener("touchmove", function() {
+            document.querySelector(".point-home-hide").style.background = "#FFFFFF"
+            pointhome11.style.marginBottom = "6px";
+            pointhome11.style.width = "8px";
+            pointhome11.style.height = "8px";
+        })
+
+</script>
+
+
 </body>
 
 </html>
