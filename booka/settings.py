@@ -43,7 +43,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 INSTALLED_APPS = [
     'booka',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -55,6 +54,7 @@ INSTALLED_APPS = [
     'books',
     'search',
     'widget_tweaks',
+    'django.contrib.admin'
 ]
 
 MIDDLEWARE = [
@@ -91,12 +91,12 @@ WSGI_APPLICATION = 'booka.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-load_dotenv('E:\Proga\Booka\\booka\\booka\\.env')
+load_dotenv(r"C:\Users\USER\PycharmProjects\\booka\\booka\.env")
 
 DATABASES = {
     'default': {
-        'ENGINE': f"django.db.backends.{os.environ['DB_ENGINE']}",
-       # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        #'ENGINE': f"django.db.backends.{os.environ['DB_ENGINE']}",
+       'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.getenv('DB_NAME'),
         'HOST': os.getenv('DB_HOST'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
