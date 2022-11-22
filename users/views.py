@@ -6,7 +6,7 @@ from .forms import UserCreateForm, UserLoginForm
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import get_user_model
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -68,16 +68,7 @@ class LoginView(View):
 
 
 class UserPasswordResetView(PasswordResetView):
-    email_template_name = "registration/password_reset_email.html"
-    extra_email_context = None
-    form_class = PasswordResetForm
-    from_email = None
-    html_email_template_name = None
-    subject_template_name = "registration/password_reset_subject.txt"
-    success_url = reverse_lazy("users:password-reset-done")
     template_name = "registration/password_reset_form.html"
-    title = _("Password reset")
-    token_generator = default_token_generator
 
     def get_success_url(self):
         return reverse('users:password-reset-done')
@@ -85,7 +76,18 @@ class UserPasswordResetView(PasswordResetView):
 
 class UserPasswordResetDoneView(PasswordResetDoneView):
     template_name = "registration/password_reset_done.html"
-    title = _("Password reset sent")
+
+    def get_success_url(self, request):
+        return redirect(request, self.template_name)
+
+class UserPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = "registration/password_reset_confirm.html"
+
+    def get_success_url(self):
+        return reverse('users:password-reset-complete')
+
+class UserPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = "registration/password_reset_complete.html"
 
     def get_success_url(self, request):
         return redirect(request, self.template_name)
