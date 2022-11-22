@@ -22,7 +22,7 @@ class BookListView(LoginRequiredMixin, View):
 
     def get(self, request, **kwargs):
         contact_list = []
-        books = BookModel.objects.all().filter(book_type=1)
+        books = BookModel.objects.all().filter(book_type=1).order_by('-id')
         if books:
             for book in books:
                 try:

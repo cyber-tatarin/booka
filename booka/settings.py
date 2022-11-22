@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'booka.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-load_dotenv(r"C:\Users\USER\PycharmProjects\\booka\\booka\.env")
+load_dotenv(r"E:\Proga\Booka\booka\booka\.env")
 
 DATABASES = {
     'default': {

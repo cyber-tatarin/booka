@@ -2,7 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.views import View
 from django.views.generic import ListView
-from .forms import UserCreateForm, UserLoginForm, UserPasswordResetForm
+from .forms import UserCreateForm, UserLoginForm
+from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import get_user_model
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
@@ -65,10 +66,11 @@ class LoginView(View):
 
         return render(request, self.template_name, context)
 
+
 class UserPasswordResetView(PasswordResetView):
     email_template_name = "registration/password_reset_email.html"
     extra_email_context = None
-    form_class = UserPasswordResetForm
+    form_class = PasswordResetForm
     from_email = None
     html_email_template_name = None
     subject_template_name = "registration/password_reset_subject.txt"
@@ -79,6 +81,7 @@ class UserPasswordResetView(PasswordResetView):
 
     def get_success_url(self):
         return reverse('users:password-reset-done')
+
 
 class UserPasswordResetDoneView(PasswordResetDoneView):
     template_name = "registration/password_reset_done.html"
