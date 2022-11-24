@@ -32,6 +32,15 @@
         <div class="main-content-book">
             <p class="lenta">Лента всех-всех книг </p>
 
+            <div class="test-button-short">
+                <a href="{% url 'books:book-create' 1 %}?next={{ request.path|urlencode }}">
+            <button class="add-to-wishlist">
+                <p class="button-p">Добавить книгу</p>
+            </button>
+                </a>
+            </div>
+
+
     {% for book, contact in book_list %}
         <section>
             <div class="book-container">

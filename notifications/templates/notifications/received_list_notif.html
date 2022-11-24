@@ -55,7 +55,7 @@
                         {% endfor %}</p>
                     <div class="info1-change">
                         <img class="icon1" src="{{MEDIA_URL}}images/user.png">
-                        <span class="profile-name name-for-fonts">{{notif.sender.username}}</span>
+                        <a href="{% url 'profile_app:books-profile' notif.sender.id %}" class="profile-name name-for-fonts">{{notif.sender.username}}</a>
                     </div>
                     {% if contact %}
                     <div class="info3 info3-margin"><img class="icon3" src="{{MEDIA_URL}}images/smartphone.png">
