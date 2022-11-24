@@ -54,10 +54,10 @@ class NotifCreateView(LoginRequiredMixin, View):
             notif.save()
 
             send_mail(
-                f'Booka: Вы получили запрос на книгу {book}',
-                f'Приветствуем! Вы получили запрос на книгу {book} от пользователя {request.user.username}! \n \n'
+                f'Booka: Вы получили сообщение насчет книги "{book}"',
+                f'Приветствуем! Вы сообщение насчет книги "{book}" от пользователя {request.user.username}! \n \n'
                 f'Вот, что букер пишет Вам: {data["message"]}. \n \n'
-                f'Зайдите на буку, чтобы ответить ',
+                f'Зайдите на буку, чтобы ответить http://booka.pythonanywhere.com/',
                 EMAIL_HOST_USER,
                 [receiver.email],
                 fail_silently=True,

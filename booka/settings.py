@@ -26,7 +26,7 @@ SECRET_KEY = get_random_secret_key()
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://83b5-185-203-155-41.eu.ngrok.io']
+CSRF_TRUSTED_ORIGINS = ['https://ca49-185-203-155-44.eu.ngrok.io']
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
@@ -153,5 +153,7 @@ EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
+
+DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
 
 client_encoding: 'UTF8'

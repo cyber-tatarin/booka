@@ -59,18 +59,22 @@
                         {% if book.owner.city %}
                         <div class="info2"><img class="icon2" src="{{MEDIA_URL}}images/placeholder.png"><span class="description">{{book.owner.city}}</span></div>
                         {% else %}
-                        <div class="info2"><img class="icon2" src="{{MEDIA_URL}}images/placeholder.png"><span class="description">Не указано</span></div>
+                        <div class="info2"><img class="icon2" src="{{MEDIA_URL}}images/placeholder.png"><span class="description">Город не указан</span></div>
                         {% endif %}
                         {% if contact %}
                         <div class="info3"><img class="icon3" src="{{MEDIA_URL}}images/smartphone.png"><span class="description">{{contact.contact_type}}: {{contact.contact}}</span></div>
                         {% else %}
-                        <div class="info3"><img class="icon3" src="{{MEDIA_URL}}images/smartphone.png"><span class="description">Не указано</span></div>
+                        <div class="info3"><img class="icon3" src="{{MEDIA_URL}}images/smartphone.png"><span class="description">Контакты не указаны</span></div>
                         {% endif %}
+                        {% if book.language %}
                         <div class="info4"><img class="icon4" src="{{MEDIA_URL}}images/chat.png"><span class="description">{{book.language}}</span>
+                            {% else %}
+                             <div class="info4"><img class="icon4" src="{{MEDIA_URL}}images/chat.png"><span class="description">Язык не указан</span>
+                                 {% endif %}
                             {% if book.year %}
                             <img class="icon5" src="{{MEDIA_URL}}images/folder.png"><span class="description">{{book.year}}</span>
                             {% else %}
-                            <img class="icon5" src="{{MEDIA_URL}}images/folder.png"><span class="description">Не указано</span>
+                            <img class="icon5" src="{{MEDIA_URL}}images/folder.png"><span class="description">Год издания не указан</span>
                             {% endif %}
                         </div>
                     </div>

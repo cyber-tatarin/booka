@@ -80,11 +80,13 @@ class UserPasswordResetDoneView(PasswordResetDoneView):
     def get_success_url(self, request):
         return redirect(request, self.template_name)
 
+
 class UserPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = "registration/password_reset_confirm.html"
 
     def get_success_url(self):
         return reverse('users:password-reset-complete')
+
 
 class UserPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = "registration/password_reset_complete.html"

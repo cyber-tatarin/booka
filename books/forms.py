@@ -50,9 +50,9 @@ class BookCreateForm(forms.Form):
     def clean_name(self):
         name = self.cleaned_data['name']
 
-        if re.search(r'[^а-яА-Яa-zA-Z-,.+!?#$%()/@\' ]', name):
+        if re.search(r'[^а-яА-Яa-zA-Z-,1234567890.+!?#$%()/@\' ]', name):
             raise forms.ValidationError(
-                "Имя книги может состоять из букв русского и английского алфавита, символов -,.'+!?#$%()/@")
+                "Название книги может состоять из букв русского и английского алфавита, символов -,.'+!?#$%()/@")
 
         return name
 
